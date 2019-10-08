@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10"
+    android:layout_marginBottom="54dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        >
+
+        <ImageButton
+            android:id="@+id/exit_post"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_cross"
+            android:padding="20dp"
+            android:background="@null"
+            android:layout_marginStart="15dp">
+        </ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Write"
+            android:layout_toEndOf="@id/exit_post"
+            android:textSize="25sp"
+            android:fontFamily="@font/leelawadee"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="25dp">
+        </TextView>
+
+        <Button
+            android:id="@+id/post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee">
+        </Button>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        >
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:textSize="25sp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@null"
+            android:fontFamily="@font/leelawadee"
+            android:inputType="text">
+        </EditText>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/dullblack"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:alpha="0.5"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/post_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginTop="10dp"
+                android:hint="Please be mindful of VSA's content policy and practice good etiquette"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                >
+            </EditText>
+
+            <LinearLayout
+                android:id="@+id/imageView_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        >
+        <ImageButton
+            android:id="@+id/add_image"
+            android:layout_width="30dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_camera"
+            android:background="@null"
+            android:layout_marginStart="25dp">
+        </ImageButton>
+
+    </LinearLayout>
+</LinearLayout>

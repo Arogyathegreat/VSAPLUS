@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
+            android:gravity="bottom">
+
+            <ImageView
+                android:id="@+id/firebase_profileImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/kakaotalk_20190716_135035087"
+                android:layout_marginStart="15dp"
+                >
+            </ImageView>
+            <com.facebook.login.widget.ProfilePictureView
+                android:id="@+id/facebook_profileImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="15dp"
+                >
+            </com.facebook.login.widget.ProfilePictureView>
+
+            <TextView
+                android:id="@+id/user_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="3dp"
+                android:layout_toEndOf="@id/facebook_profileImage"
+                android:fontFamily="@font/leelawadee"
+                android:text="Arogyathegreat"
+                android:textSize="18sp">
+
+
+            </TextView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/leelawadee"
+                android:text="I wish someone would talk to me"
+                android:textSize="20sp"></TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8">
+
+            <TextView
+                android:id="@+id/likeCount"
+                android:layout_toStartOf="@id/commentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:text="1000"
+                android:drawableStart="@drawable/ic_heart"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical">
+            </TextView>
+            <TextView
+                android:id="@+id/commentCount"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                android:text="1000"
+                android:drawableStart="@drawable/ic_comment"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical">
+            </TextView>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/dullblack"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:alpha="0.5"/>
+</LinearLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SigninFragment">
+
+    <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/facebook_login_auto"
+        android:visibility="gone"/>
+
+    <Button
+        android:background="@color/facebook"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/facebook_login_custom"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:text="@string/facebook_signin"
+        android:drawableStart="@drawable/ic_facebook"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:layout_marginTop="80dp"/>
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/OR"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="OR"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/email_entry"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/email_entry"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:paddingStart="10dp"
+        android:layout_above="@+id/password_entry"
+        android:hint="@string/enterid"
+        android:inputType="textEmailAddress|text"
+        android:background="@drawable/simple_box"/>
+    <EditText
+        android:id="@+id/password_entry"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="4dp"
+        android:paddingStart="10dp"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:background="@drawable/simple_box"
+        android:layout_above="@+id/sign_in"/>
+
+    <Button
+        android:id="@+id/forgot_id"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/password_entry"
+        android:layout_centerInParent="true"
+        android:text="Forgot?"
+        android:textAllCaps="false"
+        android:fontFamily="@font/leelawadee"
+        android:textSize="18sp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorAccent"
+        android:layout_above="@+id/sign_in"
+        />
+
+    <Button
+        android:id="@+id/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:text="@string/signin"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/leelawadee"
+        android:textColor="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
+        />
+
+
+
+</RelativeLayout>

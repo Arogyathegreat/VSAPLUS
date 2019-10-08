@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FAFAF2</color>
+    <color name="colorPrimaryDark">#5a5950</color>
+    <color name="colorAccent">#34b6f8</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dullblack">#707070</color>
+
+    //email
+    <color name="email">#086EF8</color>
+    //facebook
+    <color name="facebook">#3b5998</color>
+    <color name="youtubered">#c4302b</color>
+
+
+    <color name="beginner">#49b654</color>
+    <color name="beginner_tv">#a0d976</color>
+
+    <color name="intermediate">#b51ba8</color>
+    <color name="intermediate_tv">#e75fdc</color>
+
+    <color name="advanced">#02276f</color>
+    <color name="advanced_tv">#97b9fd</color>
+</resources>

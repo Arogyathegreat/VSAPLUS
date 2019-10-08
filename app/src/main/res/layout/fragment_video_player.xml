@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".VideoPlayerFragment"
+    android:weightSum="10"
+    android:background="@color/white">
+
+
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtube_player_view"
+            android:layout_weight="4"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            app:useWebUi="true">
+        </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
+
+
+    <RelativeLayout
+        android:layout_weight="2"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/tv_videoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="center_vertical"
+            android:textSize="22sp"
+            android:fontFamily="@font/leelawadee"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <ImageButton
+            android:id="@+id/bookmarks"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_bookmarks"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="75dp"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/ic_share"
+            android:background="@null"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_weight="5"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Up Next"
+                android:textSize="20sp"
+                android:fontFamily="@font/leelawadee"
+                android:paddingLeft="15dp"/>
+
+        <View
+            android:layout_below="@id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/dullblack"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:alpha="0.3"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:id="@+id/video_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+</LinearLayout>

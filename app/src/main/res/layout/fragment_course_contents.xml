@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="8">
+
+    <RelativeLayout
+        android:id="@+id/head_container"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/advanced">
+
+        <TextView
+            android:id="@+id/course_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beginners"
+            android:textColor="#97b9fd"
+            android:layout_above="@+id/course_name"
+            android:layout_marginStart="15dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee"/>
+
+        <TextView
+            android:id="@+id/course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Introduction to Hangul"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0dp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_weight="6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>

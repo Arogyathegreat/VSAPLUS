@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10" >
+
+<!-- App name (VSA)+ view, consists of a textview inside a relativelayout with cardview as the wrapper-->
+    <androidx.cardview.widget.CardView
+        android:layout_weight="0.83"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        ​<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/textView"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="VSA+"
+                android:layout_marginStart="15dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/leelawadee" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+<!-- End of the App name card -->
+
+
+    <!-- Small line below VSA+ -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/dullblack"
+        android:alpha="0.3"/>
+
+
+
+     Starting the scrolling from here
+    <androidx.core.widget.NestedScrollView
+        android:layout_weight="9.17"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="54dp">
+
+    <!-- Everything else is included in this linear layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="10"
+            android:paddingBottom="5dp"
+            >
+            ​
+            <!-- Cardview for Textview and button to send to signup only if the user is null -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/signup_card"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.5"
+                android:layout_marginTop="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/leelawadee"
+                        android:gravity="center"
+                        android:text="Ready to start learning?"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/sign_in"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+
+                        android:layout_weight="0.6"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/leelawadee"
+                        android:text="Sign in"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- End of the signup button -->
+
+            <!-- Starting the card section for browse vsa+ and the recycler view -->
+            <androidx.cardview.widget.CardView
+                android:layout_weight="7"
+
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                >
+
+                <!-- Linear layout consisting of everything makes easier to implement card view this way -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <!-- Includes the browse vsa+ textview -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.65">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/leelawadee"
+                            android:gravity="center_vertical"
+                            android:text="Browse VSA+"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Small line under the textview for browse vsa+ -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:alpha="0.3"
+                        android:background="@color/dullblack" />
+
+                    <!-- Linearlayout to include the recyclerview, this might be necessary for nestedscrollview-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4.25"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@null"
+                            android:nestedScrollingEnabled="true"
+                            android:paddingBottom="15dp">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                        <!-- End layout for recycler card -->
+                    </LinearLayout>
+                    <!-- End of layout for textview and recycler card -->
+                </LinearLayout>
+
+                <!-- End of the textview and recycler card -->
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/goTest"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin= "25dp"
+                        android:text="Take test"
+                        android:textSize="20sp"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/leelawadee"
+                        />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- End of layout for all views except the application name card -->
+        </LinearLayout>
+
+        <!-- End of nestedscrolling -->
+    </androidx.core.widget.NestedScrollView>
+
+    ​<!-- End of the view -->
+</LinearLayout>

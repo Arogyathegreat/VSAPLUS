@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10"
+    android:layout_marginBottom="54dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Our Games"
+            android:textSize="25sp"
+            android:paddingLeft="25dp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/colorPrimaryDark">
+        </TextView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/dullblack"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:alpha="0.5"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.25">
+
+        <Button
+            android:id="@+id/adventure_game"
+            android:text="Adventure"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="45dp">
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.25">
+
+        <Button
+            android:id="@+id/visualnovel_game"
+            android:text="Visual Novel"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="45dp">
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.25">
+
+        <Button
+            android:id="@+id/turret_game"
+            android:text="Dodge the bullet"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="45dp">
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.25">
+
+        <Button
+            android:id="@+id/draganddrop_game"
+
+            android:text="Words"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="45dp">
+        </Button>
+
+    </LinearLayout>
+
+</LinearLayout>
