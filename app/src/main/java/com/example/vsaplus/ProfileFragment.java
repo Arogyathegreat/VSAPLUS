@@ -146,7 +146,6 @@ public class ProfileFragment extends Fragment {
                     stUid = sharedPreferences.getString("uid", "");
                     stEmail = sharedPreferences.getString("email", "");
 
-
                     String userphoto = String.valueOf(user.getPhotoUrl());
                     String statusdata = statusBox.getText().toString();
                     HashMap<String, String> profile = new HashMap<String, String>();
@@ -231,7 +230,10 @@ public class ProfileFragment extends Fragment {
             profileImage.setVisibility(View.VISIBLE);
             ivUser.setVisibility(View.GONE);
             profileImage.setProfileId(userID);
-
+            String photouri = "https://graph.facebook.com/" + userID+ "/picture?type=large";
+            Hashtable<String,Object> uploadimage = new Hashtable<>();
+            uploadimage.put("photo",photouri);
+            myRef.child(user.getUid()).updateChildren(uploadimage);
         }
 
 
@@ -260,6 +262,9 @@ public class ProfileFragment extends Fragment {
                                 break;
                             case R.id.editprofile:
                                 ((MainActivity)getActivity()).loadFragment(EditUserInfoFragment.newInstance());
+                                break;
+                            case R.id.bookmarks:
+                                ((MainActivity)getActivity()).loadFragment(BookmarkFragment.newInstance());
                                 return true;
                         }
                         return false;

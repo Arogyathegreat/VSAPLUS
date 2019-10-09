@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.games:
-                fragment = new GamelistFragment();
+                fragment = new SearchFragment();
                 break;
 
             case R.id.community:
@@ -97,21 +97,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
         public void onBackPressed(){
 
-        if(!(this.getSupportFragmentManager().findFragmentById(R.id.bottom_navigation_frame) instanceof Homefragment))//home fragment 아닐경우
+        if((this.getSupportFragmentManager().findFragmentById(R.id.bottom_navigation_frame) instanceof Homefragment))//home fragment 일경우
         {
-            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-            MenuItem item = bottomNavigationView.getMenu().findItem(R.id.home);
-            item.setChecked(true);
-            bottomNavigationView.getMenu().findItem(bottomNavigationView.getSelectedItemId()).setChecked(false);
-            onNavigationItemSelected(item);
-        }
-        else{//homefragment 일경우
             if(System.currentTimeMillis()-time>=2000){
                 time=System.currentTimeMillis();
                 Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 종료합니다.",Toast.LENGTH_SHORT).show();
             }else if(System.currentTimeMillis()-time<2000){
                 finish();
             }
+
+        }
+        else if(this.getSupportFragmentManager().findFragmentById(R.id.bottom_navigation_frame) instanceof WriteCommunityFragment
+                ||this.getSupportFragmentManager().findFragmentById(R.id.bottom_navigation_frame) instanceof PostViewFragment ){
+            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+            MenuItem item = bottomNavigationView.getMenu().findItem(R.id.community);
+            bottomNavigationView.getMenu().findItem(bottomNavigationView.getSelectedItemId()).setChecked(false);
+            item.setChecked(true);
+            onNavigationItemSelected(item);
+        }
+        else{//homefragment 아닐경우
+            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+            MenuItem item = bottomNavigationView.getMenu().findItem(R.id.home);
+            item.setChecked(true);
+            bottomNavigationView.getMenu().findItem(bottomNavigationView.getSelectedItemId()).setChecked(false);
+            onNavigationItemSelected(item);
         }
 
         }

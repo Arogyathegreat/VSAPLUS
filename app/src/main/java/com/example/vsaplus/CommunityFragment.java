@@ -16,8 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.login.widget.ProfilePictureView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,11 +35,14 @@ public class CommunityFragment extends Fragment {
         return new CommunityFragment();
     }
 
-    FirebaseRecyclerAdapter<PostModel,PostViewHolder> adapter;
+    FirebaseRecyclerAdapter<PostModel,PostViewHolder> adapter1;
+    FirebaseRecyclerAdapter<PostModel,PostViewHolder> adapter2;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("community");
     private RecyclerView noticeview;
+    private RecyclerView normalview;
     private Button write;
+    private Button seemore;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -45,7 +51,8 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_community_notice,container,false);
-        noticeview = view.findViewById(R.id.userCommunityList);
+        noticeview = view.findViewById(R.id.noticeView);
+        normalview = view.findViewById(R.id.userCommunityList);
         write = view.findViewById(R.id.create_post);
         write.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,26 +60,58 @@ public class CommunityFragment extends Fragment {
                 ((MainActivity)getActivity()).loadFragment(WriteCommunityFragment.newInstance());
             }
         });
+
         noticeview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        normalview.setLayoutManager(new LinearLayoutManager(getActivity()));
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
-            Query query = myRef.child("post").orderByValue();
-            setRecyclerView(query);
+            Query query1 = myRef.child("post").orderByKey().limitToFirst(10);
+            setnormalRecyclerView(query1);
+            Query query2 = myRef.child("post").orderByChild("Like").limitToLast(1);
+            setnoticeRecyclerView(query2);
         }
         else{
             ((MainActivity)getActivity()).loadFragment(SignupFragment.newInstance());
         }
+        seemore = view.findViewById(R.id.post_seemore);
+        seemore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).loadFragment(NormalCommunityFragment.newInstance());
+            }
+        });
         return view;
     }
-    public void setRecyclerView(Query query) {
+    public void setnoticeRecyclerView(Query query){
+        FirebaseRecyclerOptions<PostModel> options = new FirebaseRecyclerOptions.Builder<PostModel>()
+                .setQuery(query,PostModel.class)
+                .build();
+        adapter1 = new FirebaseRecyclerAdapter<PostModel, PostViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull PostViewHolder postViewHolder, int position, @NonNull PostModel postModel) {
+                postViewHolder.setPostname(postModel.gettitle(),postModel.getUserName(),postModel.getContent(),postModel.getUserUid(),postModel.getLike(),postModel.getReply(),postModel.getPostnum());
+                Log.d("Start", "posttitle data: " +  postModel.gettitle() );
+            }
+
+            @NonNull
+            @Override
+            public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_user_board, parent, false);
+                return new PostViewHolder(view);
+            }
+        };
+        noticeview.setAdapter(adapter1);
+        adapter1.startListening();
+    }
+    public void setnormalRecyclerView(Query query) {
         FirebaseRecyclerOptions<PostModel> options = new FirebaseRecyclerOptions.Builder<PostModel>()
                 .setQuery(query,PostModel.class)
                 .build();
 
-        adapter = new FirebaseRecyclerAdapter<PostModel, PostViewHolder>(options) {
+        adapter2 = new FirebaseRecyclerAdapter<PostModel, PostViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull PostViewHolder postViewHolder, int position, @NonNull PostModel postModel) {
-                postViewHolder.setPostname(postModel.gettitle(), postModel.getUserUID(),getActivity());
+                postViewHolder.setPostname(postModel.gettitle(),postModel.getUserName(),postModel.getContent(),postModel.getUserUid(),postModel.getLike(),postModel.getReply(),postModel.getPostnum());
 
                 Log.d("Start", "posttitle data: " +  postModel.gettitle() );
             }
@@ -84,8 +123,8 @@ public class CommunityFragment extends Fragment {
                 return new PostViewHolder(view);
             }
         };
-        noticeview.setAdapter(adapter);
-        adapter.startListening();
+        normalview.setAdapter(adapter2);
+        adapter2.startListening();
     }
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
@@ -97,19 +136,34 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         mView = itemView;
     }
 
-    void setPostname(final String PostTitle, final String UserUid, final Activity activity) {
+    void setPostname(final String title,final String username,final String content,final String UserUid,final int like,final int reply,final int postnum) {
         TextView nameView = mView.findViewById(R.id.title);//fix
         TextView userView = mView.findViewById(R.id.user_ID);//fix
-        ImageButton removal = mView.findViewById(R.id.delete_bookmark);
-        nameView.setText(PostTitle);
+        TextView LikeView = mView.findViewById(R.id.likeCount);
+        TextView ReplyView = mView.findViewById(R.id.commentCount);
+        LinearLayout clickview = mView.findViewById(R.id.clickview);
 
-        userView.setText(UserUid);
-        nameView.setOnClickListener(new View.OnClickListener() {
+        nameView.setText(title);
+        userView.setText(username);
+        LikeView.setText(like+"");
+        ReplyView.setText(reply+"");
+        clickview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //frament->community
+                Fragment fragment = new PostViewFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("title",title);
+                bundle.putString("content", content);
+                bundle.putInt("Like",like);
+                bundle.putString("UserName",username);
+                bundle.putInt("postnum",postnum);
+                bundle.putString("userUid",UserUid);
+                bundle.putInt("reply",reply);
+                fragment.setArguments(bundle);
+                ((MainActivity)getActivity()).loadFragment(fragment);
             }
         });
 
     }
+
 }}
