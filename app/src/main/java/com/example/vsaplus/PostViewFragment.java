@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +32,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +42,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class PostViewFragment extends Fragment {
@@ -50,6 +55,7 @@ public class PostViewFragment extends Fragment {
     FirebaseDatabase database1 = FirebaseDatabase.getInstance();
     DatabaseReference userRef = database1.getReference("users");
     int postnum = 0;
+    boolean liked = false;
     String title = null;
     String contents = null;
     String userUid=null;
@@ -115,11 +121,34 @@ public class PostViewFragment extends Fragment {
         likebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myRef.child("post").child(postnum-2*postnum+"").runTransaction(new Transaction.Handler() {
+                    @NonNull
+                    @Override
+                    public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                        PostModel postModel = mutableData.getValue(PostModel.class);
+                        if(postModel==null){
+                            return Transaction.success(mutableData);
+                        }
+                        if(postModel.getLikepeople() == null||!(postModel.getLikepeople().containsKey(user.getUid()))){
+                            postModel.setLike(++Like);
+                            HashMap<String,Boolean> liker = new HashMap<>();
+                            liker.put(user.getUid(),true);
+                            postModel.setLikepeople(liker);
 
-                Hashtable<String,Object> likeobj = new Hashtable<>();
-                likeobj.put("Like",++Like);
-                myRef.child("post").child(postnum-2*postnum+"").updateChildren(likeobj);
-                Likecount.setText(Like+"");
+                        }
+                        else{
+                            postModel.setLike(--Like);
+                            postModel.getLikepeople().remove(user.getUid());
+                        }
+                        mutableData.setValue(postModel);
+                        return Transaction.success(mutableData);
+                    }
+                    @Override
+                    public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+                        Likecount.setText(Like+"");
+                    }
+                });
+
             }
         });
         commentbutton.setOnClickListener(new View.OnClickListener() {
@@ -143,15 +172,16 @@ public class PostViewFragment extends Fragment {
                 repl.put("userName",user.getDisplayName());
                 repl.put("comment",reply);
                 repl.put("picture",String.valueOf(user.getPhotoUrl()));
-                myRef.child("post").child(postnum-2*postnum+"").child("Comments").child(replynum+1+"").updateChildren(repl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                myRef.child("post").child(postnum-2*postnum+"").child("Comments")
+                        .child(replynum+1+"").updateChildren(repl).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             writecomment.setText("");
                             comment.setVisibility(View.GONE);
                             replynum = replynum+1;
-                            myRef.child("post").child(postnum+"").child("Reply").setValue(replynum);
-                            Query query = myRef.child("post").child(postnum+"").child("Comments").orderByValue();
+                            myRef.child("post").child(postnum-2*postnum+"").child("Reply").setValue(replynum);
+                            Query query = myRef.child("post").child(postnum-2*postnum+"").child("Comments").orderByValue();
                             setRecyclerView(query);
                             commentcount.setText(replynum+"");
                         }
@@ -159,21 +189,21 @@ public class PostViewFragment extends Fragment {
                 });
             }
         });
-        userRef.child(userUid).child("photo").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String photo = dataSnapshot.getValue().toString();
-                if(photo == null || photo.equals("")||photo.equals("null")) return;
-                Picasso.get()
-                        .load(photo)
-                        .fit()
-                        .centerInside()
-                        .into(profileimage);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+//        userRef.child(userUid).child("photo").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String photo = dataSnapshot.getValue().toString();
+//                if(photo == null || photo.equals("")||photo.equals("null")) return;
+//                Picasso.get()
+//                        .load(photo)
+//                        .fit()
+//                        .centerInside()
+//                        .into(profileimage);
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
         if(replynum > 0){
             Query query = myRef.child("post").child(postnum+"").child("Comments").orderByValue();
             setRecyclerView(query);
@@ -200,6 +230,7 @@ public class PostViewFragment extends Fragment {
         replyView.setAdapter(adapter);
         adapter.startListening();
     }
+
 public class ReplyViewHolder extends RecyclerView.ViewHolder{
         View mView;
     ReplyViewHolder(View itemView) {
