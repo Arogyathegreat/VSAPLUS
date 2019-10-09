@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class Homefragment extends Fragment {
     private Button goTest;  //test button at the bottom might be moved somewhere else
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance(); //rootlevel instance of firestore
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //gets current user if available
-
+    private ImageButton searchButton;
 
 //function to start a new instance of homefragment generally called from other fragments
     public static Homefragment newInstance() {
@@ -75,6 +76,14 @@ public class Homefragment extends Fragment {
         goTest = view.findViewById(R.id.goTest);
         signin = view.findViewById(R.id.sign_in);
         mCourses.setLayoutManager(new LinearLayoutManager(getActivity()));
+        searchButton = view.findViewById(R.id.search_button);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).loadFragment(SearchFragment.newInstance());
+            }
+        });
 
         signin.setOnClickListener(new View.OnClickListener() { //listener for sigin button takes the user to SignupFragment for signup
             @Override

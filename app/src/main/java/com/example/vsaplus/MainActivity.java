@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.games:
-                fragment = new SearchFragment();
+                fragment = new GamelistFragment();
                 break;
 
             case R.id.community:

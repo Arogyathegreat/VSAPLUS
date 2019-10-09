@@ -126,7 +126,7 @@
 
                         <TextView
 
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="15dp"
                             android:fontFamily="@font/leelawadee"
@@ -135,6 +135,15 @@
                             android:textColor="#000000"
                             android:textSize="20sp"
                             android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/search_button"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/ic_search"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="200dp">
+                        </ImageButton>
                     </LinearLayout>
 
                     <!-- Small line under the textview for browse vsa+ -->

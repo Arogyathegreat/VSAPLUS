@@ -40,7 +40,9 @@ public class SearchFragment extends Fragment {
     public String mVideoTitle; //videoTitle of search results
 
 
-
+    public static SearchFragment newInstance(){
+        return new SearchFragment();
+    }
 
 
     public SearchFragment() {
