@@ -31,14 +31,14 @@
             android:id="@+id/img_1"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/kakaotalk_20190716_135035087">
+            android:visibility="gone">
         </ImageView>
 
         <ImageView
             android:id="@+id/img_2"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/badge_sun">
+            android:visibility="gone">
 
         </ImageView>
 
@@ -46,7 +46,7 @@
             android:id="@+id/img_3"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/badge_diamond">
+            android:visibility="gone">
 
         </ImageView>
 

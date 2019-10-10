@@ -1,5 +1,6 @@
 package com.example.vsaplus;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
@@ -21,24 +22,87 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DragAndDropActivity extends Activity implements View.OnDragListener, View.OnLongClickListener {
-
+    private LinearLayout topcontainer;
     private LottieAnimationView checkMark;
+    private FirebaseFirestore rootref = FirebaseFirestore.getInstance();
+    private String imageUrl1;
+
+    ImageView[] optionImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drag_and_drop);
 
-        findViewById(R.id.img_1).setOnLongClickListener(this);
-        findViewById(R.id.img_2).setOnLongClickListener(this);
-        findViewById(R.id.img_3).setOnLongClickListener(this);
+        topcontainer = (LinearLayout)findViewById(R.id.top_container);
+
+
+        checkMark = findViewById(R.id.green_tick);
+
+        optionImg = new ImageView[3];
+        rootref.collection("WordmakingGame")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int i = 0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                ImageView imgTest = new ImageView(getApplicationContext());
+                                imgTest.setId(i+1);
+
+
+                                Log.d("test", document.getId() + " => " + document.getString("photoUrl"));
+                                imageUrl1 = document.getString("photoUrl");
+                                Log.d("test", "1 "+imageUrl1);
+
+                                Picasso.get()
+                                        .load(imageUrl1)
+                                        .fit()
+                                        .centerInside()
+                                        .into(imgTest,new Callback.EmptyCallback() {
+                                            @Override
+                                            public void onSuccess() {
+                                                // Index 0 is the image view.
+                                                Log.d("tag", "SUCCESS" + imageUrl1);
+
+                                            }
+                                        });
+
+                                topcontainer.addView(imgTest);
+                                imgTest.getLayoutParams().height = 350;
+                                imgTest.getLayoutParams().width = 350;
+                                imgTest.setOnLongClickListener(DragAndDropActivity.this::onLongClick);
+
+                                i++;
+                            }
+                        } else {
+                            Log.d("test", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        Log.d("test", "2 "+imageUrl1);
+
 
         findViewById(R.id.top_container).setOnDragListener(this);
         findViewById(R.id.bottom_container).setOnDragListener(this);
 
-        checkMark = findViewById(R.id.green_tick);
+
+
     }
 
     @Override
@@ -101,7 +165,7 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
             return true if successfully handled the drop else false*/
 
                 switch(draggedImageView.getId()){
-                    case R.id.img_1:
+                    case 1:
                         Log.i("Start", "고급소주");
                         draggedImageViewParentLayout.removeView(draggedImageView);
                         bottomLinearLayout.addView(draggedImageView);
@@ -137,10 +201,10 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
                         }
                         return true;
 
-                    case R.id.img_2:
+                    case 2:
                         Log.i("Start", "img2");
                         return false;
-                    case R.id.img_3:
+                    case 3:
                         Log.i("Start", "img3");
                         return false;
                     default:
