@@ -100,7 +100,7 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
                 videomap.put("VideoName",videoTitle);
                 video.put(videoId, videomap);
                 bookmarked.setVideomodel(video);
-                
+
               }else{
                 HashMap<String, Object> video = new HashMap<>();
                 video.put(videoId, null);
