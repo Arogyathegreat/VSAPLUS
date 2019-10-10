@@ -7,9 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
+        android:layout_height="60dp"
         >
 
         <ImageButton
@@ -19,7 +17,8 @@
             android:src="@drawable/ic_cross"
             android:padding="20dp"
             android:background="@null"
-            android:layout_marginStart="15dp">
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true">
         </ImageButton>
 
         <TextView
@@ -30,7 +29,8 @@
             android:textSize="25sp"
             android:fontFamily="@font/leelawadee"
             android:layout_marginTop="3dp"
-            android:layout_marginStart="25dp">
+            android:layout_marginStart="25dp"
+            android:layout_centerVertical="true">
         </TextView>
 
         <Button
@@ -42,15 +42,15 @@
             android:layout_marginEnd="25dp"
             android:textAllCaps="false"
             android:textSize="20sp"
-            android:fontFamily="@font/leelawadee">
+            android:fontFamily="@font/leelawadee"
+            android:layout_centerVertical="true">
         </Button>
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="60dp"
         android:gravity="center_vertical"
         >
         <EditText
@@ -77,8 +77,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="7">
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,21 +112,5 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        >
-        <ImageButton
-            android:id="@+id/add_image"
-            android:layout_width="30dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_camera"
-            android:background="@null"
-            android:layout_marginStart="25dp">
-        </ImageButton>
 
-    </LinearLayout>
 </LinearLayout>

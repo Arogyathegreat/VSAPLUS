@@ -68,7 +68,6 @@ public class WriteCommunityFragment extends Fragment {
         user = mAuth.getCurrentUser();
         contents = view.findViewById(R.id.post_contents);
         Title = view.findViewById(R.id.title);
-        pic_upload = view.findViewById(R.id.add_image);
         commit = view.findViewById(R.id.post);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override

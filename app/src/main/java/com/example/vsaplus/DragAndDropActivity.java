@@ -2,17 +2,29 @@ package com.example.vsaplus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class DragAndDropActivity extends Activity implements View.OnDragListener, View.OnLongClickListener {
+
+    private LottieAnimationView checkMark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +35,10 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
         findViewById(R.id.img_2).setOnLongClickListener(this);
         findViewById(R.id.img_3).setOnLongClickListener(this);
 
-
         findViewById(R.id.top_container).setOnDragListener(this);
         findViewById(R.id.bottom_container).setOnDragListener(this);
+
+        checkMark = findViewById(R.id.green_tick);
     }
 
     @Override
@@ -42,6 +55,10 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
     @Override
     public boolean onDrag(View receivingLayoutView, DragEvent dragEvent) {
         View draggedImageView = (View) dragEvent.getLocalState();
+        ViewGroup draggedImageViewParentLayout = (ViewGroup)draggedImageView.getParent();
+        LinearLayout bottomLinearLayout = (LinearLayout)receivingLayoutView;
+
+
 
         switch(dragEvent.getAction()){
 
@@ -86,11 +103,38 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
                 switch(draggedImageView.getId()){
                     case R.id.img_1:
                         Log.i("Start", "고급소주");
-                        ViewGroup draggedImageViewParentLayout = (ViewGroup)draggedImageView.getParent();
                         draggedImageViewParentLayout.removeView(draggedImageView);
-                        LinearLayout bottomLinearLayout = (LinearLayout)receivingLayoutView;
                         bottomLinearLayout.addView(draggedImageView);
                         draggedImageView.setVisibility(View.VISIBLE);
+
+                        if(bottomLinearLayout.getChildCount() == 2)
+                        {
+                            checkMark.playAnimation();
+                            checkMark.addAnimatorListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animator) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animator) {
+                                    Intent intent = new Intent(DragAndDropActivity.this, MakeWordActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animator) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animator) {
+
+                                }
+                            });
+
+                        }
                         return true;
 
                     case R.id.img_2:
@@ -112,6 +156,7 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
                     Log.i("Start", "setting visible");
                     draggedImageView.setVisibility(View.VISIBLE);
                 }
+
                 return true;
 
             default:
@@ -119,5 +164,7 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
                 break;
         }
         return false;
+
+
     }
 }

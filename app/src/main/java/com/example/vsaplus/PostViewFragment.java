@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +86,8 @@ public class PostViewFragment extends Fragment {
              userUid = getArguments().getString("userUid");
             replynum = getArguments().getInt("reply");
 
+        NestedScrollView nestedScrollView = v.findViewById(R.id.nested_scroll);
+        RelativeLayout commentContainer = v.findViewById(R.id.comment);
         TextView username = v.findViewById(R.id.user_ID);
         TextView titlepost = v.findViewById(R.id.post_title);
         TextView actualpost = v.findViewById(R.id.actual_post);
@@ -126,12 +131,17 @@ public class PostViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 comment.setVisibility(View.VISIBLE);
+                nestedScrollView.scrollTo(0,commentContainer.getBottom());
+                comment.requestFocus();
+
+                Log.d("scrollTest", ""+ commentContainer.getBottom());
             }
         });
         replybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(writecomment.getText() == null || writecomment.getText().equals("")){
+                    Log.d("commentgetText", "comment is:" + writecomment.getText());
                     Toast.makeText(getContext(),"put your comment!",Toast.LENGTH_SHORT).show();
                     return;
                 }
