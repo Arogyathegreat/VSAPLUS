@@ -3,17 +3,25 @@ package com.example.vsaplus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -29,78 +37,106 @@ public class MakeWordActivity extends AppCompatActivity{
     String actualAnswer;
     String[] userAnswer;
     String[] userOptions;
+
+
     String userOptionsTest;
     TextView[] userInput;
     TextView[] optionInput;
+
+    TextView[] answerFragments;
+    String imageUrl;
 
     LinearLayout userAnswerContainer;
     LinearLayout userOptionContainer;
 
     List<CharSequence>buffer;
 
+    ImageView imageHint;
+    LottieAnimationView checkMark;
+
+    List<String> list = new ArrayList<>();
+    List<String> answer = new ArrayList<>();
+
+    int temp;
+
     private FirebaseFirestore rootref = FirebaseFirestore.getInstance();
-    int i;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_word);
 
-        rootref.collection("WordmakingGame").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    List<String> list = new ArrayList<>();
-                    for(QueryDocumentSnapshot document: task.getResult()){
-                        list = (List<String>)document.get("userInputBuffer");
-                    }
-                    Log.d("WordMake", list.toString());
-                }else{
-                    Log.d("WordMake", "Error getting documents: ", task.getException());
-                }
-            }
-        });
-
-        actualAnswer = "등원";
-        userAnswer = new String[]{"등", "원"};
-        userOptions= new String[]{"등","원", "사", "과"};
-
-        List<String> stringshuffle = Arrays.asList(userOptions);
-
-
-        Collections.shuffle(stringshuffle);
-        int optionLength = userOptions.length;
-
+        checkMark = (LottieAnimationView)findViewById(R.id.green_tick);
         userAnswerContainer = (LinearLayout)findViewById(R.id.tv_ans_container);
         userOptionContainer = (LinearLayout)findViewById(R.id.tv_letter_container);
+        imageHint = (ImageView)findViewById(R.id.image_hint);
 
-        optionInput = new TextView[optionLength];
+        DocumentReference docRef = rootref.collection("WordmakingGame").document("사과");
+        Source source  = Source.CACHE;
+       docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    answer = (List<String>) document.get("userInputBuffer");
+                    list = (List<String>) document.get("userInputOptions");
+                    imageUrl = document.getString("photoUrl");
+                    Picasso.get()
+                            .load(imageUrl)
+                            .fit()
+                            .centerInside()
+                            .into(imageHint);
+                    Collections.shuffle(list);
+                    imageSetter(list, answer);
 
-        for(i = 0; i<optionLength; i++)
-        {
-            TextView optionTest = new TextView(this);
-            optionTest.setId(i+1);
+                    Log.d("WordMakeanswer", answer.toString());
+                    Log.d("WordMakeoptions", list.toString());
+                }
 
-            optionTest.setText(userOptions[i]);
-            optionTest.setTextSize(40);
-            optionTest.setPadding(20, 10 , 10, 10);
+            else
 
-            userOptionContainer.addView(optionTest);
-            optionTest.setOnClickListener(handleOnClick(optionTest, i));
-
+            {
+                Log.d("WordMake", "Error getting documents: ", task.getException());
+            }
         }
+        });
+
+        Log.d("size", "answercount: " + userAnswerContainer.getChildCount());
+        Log.d("size", "answersize: " + temp);
+
+
 
     }
 
-    View.OnClickListener handleOnClick(final TextView textView, final int index)
+    public void imageSetter(List<String>wordList,List<String>answer)
+    {
+        int j;
+
+        answerFragments = new TextView[wordList.size()];
+        for(j = 0; j<wordList.size(); j++)
+        {
+            TextView answerFragment = new TextView(this);
+            answerFragment.setId(j+1);
+            answerFragment.setText(wordList.get(j));
+            answerFragment.setTextSize(40);
+            answerFragment.setPadding(20,10,10,10);
+            userOptionContainer.addView(answerFragment);
+            answerFragment.setOnClickListener(handleOnClick(answer, answerFragment, j));
+        }
+
+
+    }
+
+    View.OnClickListener handleOnClick(final List<String> answer, final TextView textView, final int index)
     {
         buffer = new ArrayList<CharSequence>();
-        return new View.OnClickListener(){
+        View.OnClickListener  onClickListener =  new View.OnClickListener(){
             public void onClick(View v){
                 CharSequence textFromTV = textView.getText();
                 TextView answerView = new TextView(getApplicationContext());
                 buffer.add(textFromTV);
                 Log.d("Test", "shuffled index: "+index);
-                int temp = Arrays.asList(userAnswer).indexOf(textFromTV);
+                int temp = answer.indexOf(textFromTV);
                 Log.d("Test", "non shuffled index: "+temp);
                 Log.d("Test", "buffer: "+buffer.indexOf(textFromTV));
                 if(buffer.indexOf(textFromTV)==temp){
@@ -112,8 +148,24 @@ public class MakeWordActivity extends AppCompatActivity{
                 }
                 else buffer.remove(textFromTV);
 
+                temp = answer.size();
+                Log.d("size", "answersizef: " + temp);
+
+                if(userAnswerContainer.getChildCount() == temp)
+                {
+                    checkMark.playAnimation();
+                    checkMark.addAnimatorListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            finish();
+                        }
+                    });
+                }
 
             }
+
         };
+
+        return onClickListener;
     }
 }

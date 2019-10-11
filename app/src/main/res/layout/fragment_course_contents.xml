@@ -6,9 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/head_container"
-        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/advanced">
 
         <TextView
@@ -17,16 +16,16 @@
             android:layout_height="wrap_content"
             android:text="Beginners"
             android:textColor="#97b9fd"
-            android:layout_above="@+id/course_name"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="80dp"
             android:textSize="20sp"
             android:fontFamily="@font/leelawadee"/>
 
         <TextView
             android:id="@+id/course_name"
+            android:layout_below="@id/course_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:text="Introduction to Hangul"
             android:layout_marginStart="15dp"
             android:layout_marginBottom="12dp"
@@ -40,17 +39,55 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_weight="6"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/lecture_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Games for this course"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee">
+        </TextView>
+
+        <Button
+            android:id="@+id/go_game"
+            android:text="Tower Game"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:fontFamily="@font/leelawadee"
+            android:textColor="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            >
+        </Button>
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

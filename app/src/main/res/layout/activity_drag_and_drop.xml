@@ -13,8 +13,8 @@
         android:layout_height="wrap_content">
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/green_tick"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:visibility="visible"
             app:lottie_fileName="green_check_mark.json"/>
     </LinearLayout>

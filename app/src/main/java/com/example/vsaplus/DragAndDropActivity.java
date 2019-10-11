@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -174,30 +175,16 @@ public class DragAndDropActivity extends Activity implements View.OnDragListener
                         if(bottomLinearLayout.getChildCount() == 2)
                         {
                             checkMark.playAnimation();
-                            checkMark.addAnimatorListener(new Animator.AnimatorListener() {
+                            checkMark.addAnimatorListener(new AnimatorListenerAdapter() {
                                 @Override
-                                public void onAnimationStart(Animator animator) {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animator animator) {
+                                public void onAnimationEnd(Animator animation) {
                                     Intent intent = new Intent(DragAndDropActivity.this, MakeWordActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
 
-                                @Override
-                                public void onAnimationCancel(Animator animator) {
 
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animator animator) {
-
-                                }
-                            });
-
+                        });
                         }
                         return true;
 

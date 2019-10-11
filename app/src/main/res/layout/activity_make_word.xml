@@ -8,20 +8,28 @@
     tools:context=".MakeWordActivity"
     android:weightSum="3">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
         >
         <ImageView
+            android:id="@+id/image_hint"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/kakaotalk_20190716_135035087">
+            android:layout_centerInParent="true">
 
         </ImageView>
 
-    </LinearLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/green_tick"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            app:lottie_fileName="green_check_mark.json">
+        </com.airbnb.lottie.LottieAnimationView>
+
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/tv_ans_container"
         android:layout_width="match_parent"
