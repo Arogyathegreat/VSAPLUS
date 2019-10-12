@@ -86,9 +86,9 @@ public class PostViewFragment extends Fragment {
              Like = getArguments().getInt("Like");
              Username = getArguments().getString("UserName");
              postnum = getArguments().getInt("postnum");
-             userUid = getArguments().getString("userUid");
-            replynum = getArguments().getInt("reply");
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+             userUid = getArguments().getString("UserUid");
+            replynum = getArguments().getInt("Reply");
+
         TextView username = v.findViewById(R.id.user_ID);
         TextView titlepost = v.findViewById(R.id.post_title);
         TextView actualpost = v.findViewById(R.id.actual_post);
@@ -165,23 +165,25 @@ public class PostViewFragment extends Fragment {
                     return;
                 }
                 writecomment.clearFocus();
-
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(writecomment.getWindowToken(), 0);
                 String reply = writecomment.getText().toString();
                 HashMap<String,Object> repl = new HashMap<>();
                 repl.put("userName",user.getDisplayName());
                 repl.put("comment",reply);
                 repl.put("picture",String.valueOf(user.getPhotoUrl()));
-                myRef.child("post").child(postnum-2*postnum+"").child("Comments")
-                        .child(replynum+1+"").updateChildren(repl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                HashMap<String,Object> replymodel = new HashMap<>();
+                replymodel.put(replynum+1+"num",repl);
+                myRef.child("post").child(postnum-2*postnum+"").child("comments")
+                        .updateChildren(replymodel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             writecomment.setText("");
                             comment.setVisibility(View.GONE);
                             replynum = replynum+1;
-                            myRef.child("post").child(postnum-2*postnum+"").child("Reply").setValue(replynum);
-                            Query query = myRef.child("post").child(postnum-2*postnum+"").child("Comments").orderByValue();
+                            myRef.child("post").child(postnum-2*postnum+"").child("reply").setValue(replynum);
+                            Query query = myRef.child("post").child(postnum-2*postnum+"").child("comments").orderByValue();
                             setRecyclerView(query);
                             commentcount.setText(replynum+"");
                         }
@@ -205,7 +207,7 @@ public class PostViewFragment extends Fragment {
 //            }
 //        });
         if(replynum > 0){
-            Query query = myRef.child("post").child(postnum+"").child("Comments").orderByValue();
+            Query query = myRef.child("post").child(postnum-2*postnum+"").child("comments").orderByValue();
             setRecyclerView(query);
         }
         return v;

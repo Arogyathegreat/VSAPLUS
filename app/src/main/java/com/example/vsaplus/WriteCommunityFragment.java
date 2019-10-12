@@ -147,12 +147,13 @@ public class WriteCommunityFragment extends Fragment {
                     HashMap<String, Object> data = new HashMap<>();
                     data.put("title", title);
                     data.put("content", content);
-                    data.put("Like", 0);
-                    data.put("Reply", 0);
+                    data.put("like", 0);
+                    data.put("reply", 0);
                     data.put("userName", user.getDisplayName());
-                    data.put("UserUid",user.getUid());
+                    data.put("userUid",user.getUid());
                     data.put("postnum",postnumber);
-                    data.put("Likepeople",null);
+                    data.put("likepeople",null);
+                    data.put("comments",null);
                     upload.put(postnumber-2*postnumber + "", data);
                     Map<String, Object> update = new Hashtable<>(upload);
                     myRef.child("post").updateChildren(update)
