@@ -4,7 +4,7 @@
     //profile
     <string name="sign_out">Sign out</string>
     <string name="edit_profile">Edit profile</string>
-
+    <string name="bookmark">Bookmark</string>
     //activity_signup
     <string name="join_us">Join VSA+. Always be learning!</string>
     <string name="sync">Your progress will be in sync no matter which phone you\'re using.</string>

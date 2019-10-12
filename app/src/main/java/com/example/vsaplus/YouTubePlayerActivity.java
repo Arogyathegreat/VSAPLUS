@@ -13,12 +13,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -78,22 +82,37 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
-        Hashtable<String, Object> video = new Hashtable<String, Object>();
-        HashMap<String,String> videomap = new HashMap<String,String>();
-        videomap.put("VideoId",videoId);
-        videomap.put("VideoName",videoTitle);
-        video.put(videoId, videomap);
-        Map<String, Object> update = new Hashtable<String, Object>(video);
+
+
         if(user != null ) {
-          myRef.child(user.getUid()).child("bookmark").updateChildren(update);
-          myRef.child(user.getUid()).child("bookmark").addListenerForSingleValueEvent(new ValueEventListener() {
+          boolean saved;
+          myRef.child(user.getUid()).child("bookmark").runTransaction(new Transaction.Handler() {
+            @NonNull
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              Toast.makeText(getApplicationContext(), "Bookmark saved!", Toast.LENGTH_SHORT).show();
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+              Bookmarked bookmarked = mutableData.getValue(Bookmarked.class);
+
+              if(bookmarked == null)return Transaction.success(mutableData);
+              if(bookmarked.getVideomodel()==null||!(bookmarked.getVideomodel().containsKey(videoId))){
+                HashMap<String, Object> video = new HashMap<>();
+                HashMap<String,String> videomap = new HashMap<String,String>();
+                videomap.put("VideoId",videoId);
+                videomap.put("VideoName",videoTitle);
+                video.put(videoId, videomap);
+                bookmarked.setVideomodel(video);
+
+              }else{
+                HashMap<String, Object> video = new HashMap<>();
+                video.put(videoId, null);
+                bookmarked.setVideomodel(video);
+
+              }
+              mutableData.setValue(bookmarked);
+              return Transaction.success(mutableData);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
 
             }
           });

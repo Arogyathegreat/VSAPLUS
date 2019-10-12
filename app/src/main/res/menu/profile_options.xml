@@ -11,6 +11,11 @@
         android:title="@string/edit_profile">
     </item>
 
+    <item
+        android:id="@+id/bookmarks"
+        android:title="@string/bookmark">
+    </item>
+
 
 
 </menu>
