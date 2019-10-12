@@ -88,7 +88,7 @@ public class PostViewFragment extends Fragment {
              postnum = getArguments().getInt("postnum");
              userUid = getArguments().getString("userUid");
             replynum = getArguments().getInt("reply");
-
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         TextView username = v.findViewById(R.id.user_ID);
         TextView titlepost = v.findViewById(R.id.post_title);
         TextView actualpost = v.findViewById(R.id.actual_post);
@@ -165,7 +165,7 @@ public class PostViewFragment extends Fragment {
                     return;
                 }
                 writecomment.clearFocus();
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
                 inputMethodManager.hideSoftInputFromWindow(writecomment.getWindowToken(), 0);
                 String reply = writecomment.getText().toString();
                 HashMap<String,Object> repl = new HashMap<>();
