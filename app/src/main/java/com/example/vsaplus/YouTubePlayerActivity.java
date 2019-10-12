@@ -92,8 +92,7 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
               Bookmarked bookmarked = mutableData.getValue(Bookmarked.class);
 
-              if(bookmarked == null)return Transaction.success(mutableData);
-              if(bookmarked.getVideomodel()==null||!(bookmarked.getVideomodel().containsKey(videoId))){
+              if(!(bookmarked.getVideomodel().containsKey(videoId))){
                 HashMap<String, Object> video = new HashMap<>();
                 HashMap<String,String> videomap = new HashMap<String,String>();
                 videomap.put("VideoId",videoId);

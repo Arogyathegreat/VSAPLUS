@@ -62,6 +62,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.share.internal.DeviceShareDialogFragment.TAG;
 
 
@@ -77,6 +78,7 @@ public class EditUserInfoFragment extends Fragment {
     private RelativeLayout layout;
     private Boolean isPermission = true;
     private Button resetpassword;
+    String downloadUrl;
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
     String stUid;
@@ -275,7 +277,6 @@ public class EditUserInfoFragment extends Fragment {
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
-
     /**
      *  tempFile 을 bitmap 으로 변환 후 ImageView 에 설정한다.
      */
@@ -345,40 +346,36 @@ public class EditUserInfoFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                Uri mUri = Uri.parse(downloadUrl);
-                Log.d("url", downloadUrl);
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("users");
-                final UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                        .setPhotoUri(mUri).build();
-                user = mAuth.getCurrentUser();
-                user.updateProfile(profileUpdates)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downloadUrl = uri.toString();
+                        Uri mUri = Uri.parse(downloadUrl);
+                        Log.d("url", downloadUrl);
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("users");
+                        final UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setPhotoUri(mUri).build();
+                        user = mAuth.getCurrentUser();
+                        user.updateProfile(profileUpdates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(Constraints.TAG, "User profile updated.");
+                                        }
+                                    }
+                                });
+                        Hashtable<String, String> profile = new Hashtable<String, String>();
+                        profile.put("email", stEmail);
+                        profile.put("photo",  downloadUrl);
+                        Map<String,Object> update = new Hashtable<String,Object>(profile);
+                        myRef.child(stUid).updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(Constraints.TAG, "User profile updated.");
-                                }
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getApplicationContext(), "사진 업로드가 잘 됐습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
-                Hashtable<String, String> profile = new Hashtable<String, String>();
-                profile.put("email", stEmail);
-                profile.put("photo",  downloadUrl);
-                Map<String,Object> update = new Hashtable<String,Object>(profile);
-                myRef.child(stUid).updateChildren(update);
-                myRef.child(stUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String s = dataSnapshot.getValue().toString();
-                        Log.d("Profile", s);
-                        if (dataSnapshot != null) {
-                            Toast.makeText(getActivity(), "사진 업로드가 잘 됐습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
