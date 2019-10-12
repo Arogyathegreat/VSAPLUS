@@ -157,8 +157,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
                 bundle.putInt("Like",like);
                 bundle.putString("UserName",username);
                 bundle.putInt("postnum",postnum);
-                bundle.putString("userUid",UserUid);
-                bundle.putInt("reply",reply);
+                bundle.putString("UserUid",UserUid);
+                bundle.putInt("Reply",reply);
                 fragment.setArguments(bundle);
                 ((MainActivity)getActivity()).loadFragment(fragment);
             }

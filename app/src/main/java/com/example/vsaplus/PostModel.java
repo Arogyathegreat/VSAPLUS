@@ -1,28 +1,31 @@
 package com.example.vsaplus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 
 public class PostModel {
     private String title;
     private String content;
-    private int Like;
-    private int Reply;
+    private int like;
+    private int reply;
     private String userName;
-    private String UserUid;
+    private String userUid;
     private int postnum;
-    private HashMap<String,Boolean> Likepeople;
+    private HashMap<String,Boolean> likepeople;
+    private HashMap<String,Object> comments;
     PostModel(){}
 
-    PostModel(String title,String content,int Like,int Reply,String userName,String UserUid,int postnum,HashMap<String,Boolean> Likepeople){
+    PostModel(String title,String content,int like,int reply,String userName,String userUid,int postnum,HashMap<String,Boolean> likepeople,HashMap<String,Object> comments){
         this.title = title;
         this.content = content;
-        this.Like = Like;
-        this.Reply = Reply;
+        this.like = like;
+        this.reply = reply;
         this.userName = userName;
-        this.UserUid = UserUid;
+        this.userUid = userUid;
         this.postnum = postnum;
-        this.Likepeople = Likepeople;
+        this.likepeople = likepeople;
+        this.comments = comments;
     }
     public String gettitle(){
         return title;
@@ -30,14 +33,15 @@ public class PostModel {
     public String getContent(){
         return content;
     }
-    public int getLike(){return Like;}
-    public int getReply(){return Reply;}
+    public int getLike(){return like;}
+    public int getReply(){return reply;}
     public String getUserName(){return userName;}
-    public String getUserUid(){return UserUid;}
+    public String getUserUid(){return userUid;}
     public int getPostnum(){return postnum;}
-    public HashMap<String,Boolean> getLikepeople(){return Likepeople;}
-    public void setLike(int like){this.Like = like;}
+    public HashMap<String,Boolean> getLikepeople(){return likepeople;}
+    public void setLike(int like){this.like = like;}
     public void setLikepeople(HashMap<String,Boolean> liker){
-        this.Likepeople = liker;
+        this.likepeople = liker;
     }
+    public HashMap<String, Object> getcomments(){return comments;}
 }

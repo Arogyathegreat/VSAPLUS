@@ -36,8 +36,10 @@ import android.widget.Toast;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -155,32 +157,23 @@ public class ProfileFragment extends Fragment {
                     Map<String, Object> inputprofile = new HashMap<String, Object>(profile);
 
                     myRef.child(stUid).updateChildren(inputprofile);
-                    myRef.child(stUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String s = dataSnapshot.getValue().toString();
-                            String stStatus = dataSnapshot.child("status").getValue().toString();
-                            sharedPreferences = getContext().getSharedPreferences("email", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("status",stStatus);
-                            editor.putString("uid", user.getUid());
-                            editor.putString("email", user.getEmail());
-                            editor.apply();
-                            Log.d("Profile", s+stStatus);
-                            if (dataSnapshot != null) {
-                                Toast.makeText(getActivity(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(getActivity(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                return false;
-            }
+                    sharedPreferences = getContext().getSharedPreferences("email", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("status",statusdata);
+                    editor.putString("uid", user.getUid());
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
+
+
+                    }
+
+
+                return false; }
         });
+
+
+
         String userID;
         if(Profile.getCurrentProfile()==null||Profile.getCurrentProfile().getId().equals("")){//firebase user logic
             userID = null;
