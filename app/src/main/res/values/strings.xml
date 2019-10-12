@@ -46,5 +46,7 @@
 
     <string name="email_code_sent">We have sent verification code on your id</string>
 
+    //password rest
+    <string name="password_reset">A link will be sent to your email for your password reset.</string>
 
 </resources>
