@@ -82,17 +82,20 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
-
+        Log.d("bookmark", "id, title" + videoId + " " + videoTitle);
 
         if(user != null ) {
           boolean saved;
+          Log.d("bookmark", "id, title0" + videoId + " " + videoTitle);
           myRef.child(user.getUid()).child("bookmark").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
               Bookmarked bookmarked = mutableData.getValue(Bookmarked.class);
 
+              Log.d("bookmark", "id, title01" + videoId + " " + videoTitle);
               if(bookmarked == null)return Transaction.success(mutableData);
+              Log.d("bookmark", "id, title1" + videoId + " " + videoTitle);
               if(bookmarked.getVideomodel()==null||!(bookmarked.getVideomodel().containsKey(videoId))){
                 HashMap<String, Object> video = new HashMap<>();
                 HashMap<String,String> videomap = new HashMap<String,String>();
@@ -100,11 +103,13 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
                 videomap.put("VideoName",videoTitle);
                 video.put(videoId, videomap);
                 bookmarked.setVideomodel(video);
+                Log.d("bookmark", "id, title2" + videoId + " " + videoTitle);
 
               }else{
                 HashMap<String, Object> video = new HashMap<>();
                 video.put(videoId, null);
                 bookmarked.setVideomodel(video);
+                Log.d("bookmark", "id, titleelse " + videoId + " " + videoTitle);
 
               }
               mutableData.setValue(bookmarked);
