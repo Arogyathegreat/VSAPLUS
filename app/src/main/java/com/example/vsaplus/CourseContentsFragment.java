@@ -4,6 +4,9 @@ package com.example.vsaplus;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.unity3d.player.UnityPlayerActivity;
+import com.vsagames.demo.GameTestActivity;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -118,9 +121,8 @@ public class CourseContentsFragment extends Fragment {
         mCourseName.setText(sCourseName);
 
         DocumentReference docRef = rootRef.collection("Introduction to Hangul").document("History of Hangul");
-        Source source = Source.CACHE;
 
-        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
@@ -130,16 +132,18 @@ public class CourseContentsFragment extends Fragment {
                 gameType = document.getString("gameType");
                 photoUrl = document.getString("photoUrl");
                 Log.d("gameTest", "URL: " + photoUrl);
-                Event e = document.toObject(Event.class);
+
 
                 goGame.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent toUnity = new Intent(getActivity(), MakeWordActivity.class);
+                        Intent toUnity = new Intent(getActivity(), GameTestActivity.class);
                         toUnity.setAction(Intent.ACTION_SEND);
                         toUnity.putExtra("gameType", gameType);
                         toUnity.putExtra("gameAnswer", gameAnswer);
                         toUnity.putExtra("photoUrl", photoUrl);
+                        Log.d("gameTest", "URL: " + photoUrl);
+                        getActivity().startActivity(toUnity);
                     }
                 });
             }
