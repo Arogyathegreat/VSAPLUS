@@ -82,6 +82,7 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
+        Toast.makeText(YouTubePlayerActivity.this, "We are currently working on this feature!!", Toast.LENGTH_LONG).show();
       }
     });
 

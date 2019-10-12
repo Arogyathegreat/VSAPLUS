@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.unity3d.player.UnityPlayerActivity;
+import com.vsagames.demo.GameTestActivity;
 
-public class EndScreenActivity extends UnityPlayerActivity {
+public class EndScreenActivity extends AppCompatActivity {
 
+    private GameTestActivity gameTestActivity;
     String scoreUnity;
     TextView scoreView;
 
@@ -23,7 +24,6 @@ public class EndScreenActivity extends UnityPlayerActivity {
         scoreUnity = extras.getString("score");
 
         scoreView.setText(scoreUnity);
-
 
     }
 }
