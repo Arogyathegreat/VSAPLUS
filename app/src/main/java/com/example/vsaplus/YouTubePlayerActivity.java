@@ -82,42 +82,6 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
-
-
-        if(user != null ) {
-          boolean saved;
-          myRef.child(user.getUid()).child("bookmark").runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-              Bookmarked bookmarked = mutableData.getValue(Bookmarked.class);
-
-              if(!(bookmarked.getVideomodel().containsKey(videoId))){
-                HashMap<String, Object> video = new HashMap<>();
-                HashMap<String,String> videomap = new HashMap<String,String>();
-                videomap.put("VideoId",videoId);
-                videomap.put("VideoName",videoTitle);
-                video.put(videoId, videomap);
-                bookmarked.setVideomodel(video);
-
-              }else{
-                HashMap<String, Object> video = new HashMap<>();
-                video.put(videoId, null);
-                bookmarked.setVideomodel(video);
-
-              }
-              mutableData.setValue(bookmarked);
-              return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-
-            }
-          });
-        }else {
-          Toast.makeText(getApplicationContext(), "Please login to access bookmarks feature!", Toast.LENGTH_SHORT).show();
-        }
       }
     });
 
