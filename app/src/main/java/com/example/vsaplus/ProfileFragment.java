@@ -165,6 +165,7 @@ public class ProfileFragment extends Fragment {
                     editor.putString("email", user.getEmail());
                     editor.apply();
 
+                    statusBox.clearFocus();
                     }
 
                 return false; }

@@ -55,6 +55,10 @@ public class CourseContentsFragment extends Fragment {
     private String photoUrl;
     private String gameType;
     private Button goGame;
+    private int test;
+    private TextView scoreView;
+
+    GameTestActivity gameTestActivity = new GameTestActivity();
 
     public static CourseContentsFragment newInstance() {
         CourseContentsFragment fragment = new CourseContentsFragment();
@@ -89,7 +93,7 @@ public class CourseContentsFragment extends Fragment {
         lectureList = (RecyclerView)view.findViewById(R.id.lecture_container);
         lectureList.setLayoutManager(new LinearLayoutManager(getActivity()));
         goGame = (Button)view.findViewById(R.id.go_game);
-
+        scoreView = (TextView)view.findViewById(R.id.score_unity);
 
         colorChangewithType(sCourseType); //calling for the color change function with the course type string
 
@@ -198,10 +202,20 @@ public class CourseContentsFragment extends Fragment {
                     Intent sendVideoId = new Intent(getActivity(), YouTubePlayerActivity.class);
                     sendVideoId.putExtra("videoId", videoId);
                     sendVideoId.putExtra("videoTitle", videoName);
-                    getActivity().startActivity(sendVideoId);
+                    getActivity().startActivityForResult(sendVideoId, 69);
                 }
             });
         }
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==69){
+            if(resultCode==74){
+                scoreView.setText(data.getStringExtra("unityScore"));
+            }
+        }
+    }
 }

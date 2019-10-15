@@ -95,7 +95,7 @@
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/leelawadee"
             android:hint="Let others know about you...."
-            android:inputType="textMultiLine"
+            android:inputType="textImeMultiLine"
             android:textSize="18sp"
             android:background="@drawable/simple_box"
             android:paddingStart="10dp"

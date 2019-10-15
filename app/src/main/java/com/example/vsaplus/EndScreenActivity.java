@@ -7,23 +7,22 @@ import android.widget.TextView;
 
 import com.vsagames.demo.GameTestActivity;
 
-public class EndScreenActivity extends AppCompatActivity {
+public class EndScreenActivity extends GameTestActivity {
 
-    private GameTestActivity gameTestActivity;
-    String scoreUnity;
+    GameTestActivity gameTestActivity = new GameTestActivity();
+    public int scoreUnity;
     TextView scoreView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
 
-        scoreView = (TextView)findViewById(R.id.game_score);
-
         Bundle extras = getIntent().getExtras();
-        scoreUnity = extras.getString("score");
+        scoreUnity = extras.getInt("score");
 
-        scoreView.setText(scoreUnity);
-
+        scoreView = (TextView) findViewById(R.id.game_score);
     }
 }
+
