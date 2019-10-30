@@ -62,7 +62,7 @@ public class Homefragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home,container,false);
+        View view = inflater.inflate(R.layout.fragment_home2,container,false);
         mCourses = view.findViewById(R.id.recycler_view);
 
         signupCard = view.findViewById(R.id.signup_card);
@@ -73,7 +73,7 @@ public class Homefragment extends Fragment {
             signupCard.setVisibility(View.GONE);
         }
 
-        goTest = view.findViewById(R.id.goTest);
+//        goTest = view.findViewById(R.id.goTest);
         signin = view.findViewById(R.id.sign_in);
         mCourses.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchButton = view.findViewById(R.id.search_button);
@@ -92,14 +92,14 @@ public class Homefragment extends Fragment {
             }
         });
 
-        goTest.setOnClickListener(new View.OnClickListener() { //listener for goTest button takes the user to TestFragment for test
-            @Override
-            public void onClick(View view) {
-                //((MainActivity)getActivity()).loadFragment(TestFragment.newInstance());
-                Intent intent = new Intent(getActivity(), MakeWordActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
+//        goTest.setOnClickListener(new View.OnClickListener() { //listener for goTest button takes the user to TestFragment for test
+//            @Override
+//            public void onClick(View view) {
+//                //((MainActivity)getActivity()).loadFragment(TestFragment.newInstance());
+//                Intent intent = new Intent(getActivity(), MakeWordActivity.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
 
 
         setRecyclerView(); //calling the function below to do query stuff
