@@ -85,7 +85,6 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
       }
     });
 
-
     doLayout();
   }
 

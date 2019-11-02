@@ -52,7 +52,7 @@ public class BookmarkFragment extends Fragment {
 
 
         if(user != null){
-            com.google.firebase.database.Query query = myRef.child(user.getUid()).child("bookmark").orderByPriority();
+            com.google.firebase.database.Query query = myRef.child(user.getUid()).child("bookmark").orderByValue();
             setRecyclerView(query);
         }
         return view;

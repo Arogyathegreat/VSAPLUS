@@ -67,7 +67,7 @@ public class CommunityFragment extends Fragment {
         if(user != null) {
             Query query1 = myRef.child("post").orderByKey().limitToFirst(10);
             setnormalRecyclerView(query1);
-            Query query2 = myRef.child("post").orderByChild("Like").limitToLast(1);
+            Query query2 = myRef.child("post").orderByChild("Like").limitToFirst(1);
             setnoticeRecyclerView(query2);
         }
         else{
