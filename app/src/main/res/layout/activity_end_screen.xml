@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EndScreenActivity"
-    android:gravity="center">
+    tools:context=".EndScreenActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:textSize="50sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_above="@+id/game_score"
+        android:layout_centerHorizontal="true">
+    </TextView>
 
     <TextView
         android:id="@+id/game_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SCORE"
-        android:textSize="50sp">
+        android:textSize="50sp"
+        android:textColor="@color/colorAccent"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp">
     </TextView>
 
+    <Button
+        android:id="@+id/goBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_below="@+id/game_score"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/leelawadee">
+    </Button>
 
-</LinearLayout>
+
+</RelativeLayout>
