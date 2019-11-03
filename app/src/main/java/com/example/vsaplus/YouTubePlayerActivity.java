@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firestore.v1.BeginTransactionRequest;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -38,6 +39,7 @@ import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -82,37 +84,33 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
-
-
         if(user != null ) {
-          boolean saved;
-          myRef.child(user.getUid()).child("bookmark").runTransaction(new Transaction.Handler() {
-            @NonNull
+          myRef.child(user.getUid()).child("bookmark").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-              Bookmarked bookmarked = mutableData.getValue(Bookmarked.class);
-
-              if(bookmarked == null)return Transaction.success(mutableData);
-              if(bookmarked.getVideomodel()==null||!(bookmarked.getVideomodel().containsKey(videoId))){
-                HashMap<String, Object> video = new HashMap<>();
-                HashMap<String,String> videomap = new HashMap<String,String>();
-                videomap.put("VideoId",videoId);
-                videomap.put("VideoName",videoTitle);
-                video.put(videoId, videomap);
-                bookmarked.setVideomodel(video);
-
-              }else{
-                HashMap<String, Object> video = new HashMap<>();
-                video.put(videoId, null);
-                bookmarked.setVideomodel(video);
-
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+              HashMap<String,Object> bookmarked;
+              if(!child.hasNext()){
+                bookmarked = new HashMap<>();
+                bookmarked.put(videoId,new VideoModel(videoTitle,videoId));
               }
-              mutableData.setValue(bookmarked);
-              return Transaction.success(mutableData);
+              else {
+                while (child.hasNext()) {
+                  if (child.next().getKey().equals(videoId)) {
+                    bookmarked = new HashMap<>();
+                    bookmarked.put(videoId,null);
+                    myRef.child(user.getUid()).child("bookmark").updateChildren(bookmarked);
+                    return;
+                  }
+                }
+                bookmarked = new HashMap<>();
+                bookmarked.put(videoId,new VideoModel(videoTitle,videoId));
+              }
+              myRef.child(user.getUid()).child("bookmark").updateChildren(bookmarked);
             }
 
             @Override
-            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
           });
