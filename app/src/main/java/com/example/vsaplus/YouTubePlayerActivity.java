@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firestore.v1.BeginTransactionRequest;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -38,6 +39,7 @@ import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -82,6 +84,39 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
+        if(user != null ) {
+          myRef.child(user.getUid()).child("bookmark").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
+              HashMap<String,Object> bookmarked;
+              if(!child.hasNext()){
+                bookmarked = new HashMap<>();
+                bookmarked.put(videoId,new VideoModel(videoTitle,videoId));
+              }
+              else {
+                while (child.hasNext()) {
+                  if (child.next().getKey().equals(videoId)) {
+                    bookmarked = new HashMap<>();
+                    bookmarked.put(videoId,null);
+                    myRef.child(user.getUid()).child("bookmark").updateChildren(bookmarked);
+                    return;
+                  }
+                }
+                bookmarked = new HashMap<>();
+                bookmarked.put(videoId,new VideoModel(videoTitle,videoId));
+              }
+              myRef.child(user.getUid()).child("bookmark").updateChildren(bookmarked);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+          });
+        }else {
+          Toast.makeText(getApplicationContext(), "Please login to access bookmarks feature!", Toast.LENGTH_SHORT).show();
+        }
       }
     });
 
