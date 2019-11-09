@@ -95,7 +95,7 @@ public class PasswordResetFragment extends Fragment {
         @Override
         public void run() {
             try {
-                Thread.sleep(Toast.LENGTH_SHORT);
+                Thread.sleep(Toast.LENGTH_LONG);
                 ((MainActivity) getActivity()).loadFragment(SignupFragment.newInstance());
             }catch (Exception e){
                 e.printStackTrace();

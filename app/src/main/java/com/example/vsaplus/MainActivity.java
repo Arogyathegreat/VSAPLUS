@@ -53,28 +53,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(MainActivity.this);
 
+
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
+        int newPosition = 0;
 
         switch (item.getItemId()) {
 
             case R.id.home:
                 fragment = new Homefragment();
+                newPosition = 1;
                 break;
 
             case R.id.games:
                 fragment = new GamelistFragment();
+                newPosition = 2;
                 break;
 
             case R.id.community:
                 fragment = new CommunityFragment();
+                newPosition = 3;
                 break;
 
             case R.id.profile:
                 fragment = new SignupFragment();
+                newPosition = 4;
                 break;
 
         }

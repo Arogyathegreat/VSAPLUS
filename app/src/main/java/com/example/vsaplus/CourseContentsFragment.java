@@ -1,6 +1,7 @@
 package com.example.vsaplus;
 
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -55,6 +56,9 @@ public class CourseContentsFragment extends Fragment {
     private String photoUrl;
     private String gameType;
     private Button goGame;
+    private int test;
+
+    GameTestActivity gameTestActivity = new GameTestActivity();
 
     public static CourseContentsFragment newInstance() {
         CourseContentsFragment fragment = new CourseContentsFragment();
@@ -90,7 +94,6 @@ public class CourseContentsFragment extends Fragment {
         lectureList.setLayoutManager(new LinearLayoutManager(getActivity()));
         goGame = (Button)view.findViewById(R.id.go_game);
 
-
         colorChangewithType(sCourseType); //calling for the color change function with the course type string
 
 
@@ -122,12 +125,12 @@ public class CourseContentsFragment extends Fragment {
 
         DocumentReference docRef = rootRef.collection("Introduction to Hangul").document("History of Hangul");
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot document = task.getResult();
-                gameOptions = (List<String>)document.get("gameOptions");
-                gameAnswer = document.getString("gameAnswer");
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot document = task.getResult();
+                        gameOptions = (List<String>)document.get("gameOptions");
+                        gameAnswer = document.getString("gameAnswer");
                 gameAnswerArray = (List<String>)document.get("gameAnswerArray");
                 gameType = document.getString("gameType");
                 photoUrl = document.getString("photoUrl");
@@ -143,11 +146,10 @@ public class CourseContentsFragment extends Fragment {
                         toUnity.putExtra("gameAnswer", gameAnswer);
                         toUnity.putExtra("photoUrl", photoUrl);
                         Log.d("gameTest", "URL: " + photoUrl);
-                        getActivity().startActivity(toUnity);
+                        getActivity().startActivity( toUnity);
                     }
                 });
-            }
-        });
+            }        });
 
 
         return view;
