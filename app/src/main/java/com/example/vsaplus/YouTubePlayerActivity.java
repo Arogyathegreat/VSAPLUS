@@ -92,7 +92,11 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
               HashMap<String,Object> bookmarked;
               if(!child.hasNext()){
                 bookmarked = new HashMap<>();
-                bookmarked.put(videoId,new VideoModel(videoTitle,videoId));
+                HashMap<String,String> videomodel = new HashMap<>();
+                videomodel.put("VideoId",videoId);
+                videomodel.put("VideoName",videoTitle);
+                bookmarked.put(videoId,videomodel);
+                Toast.makeText(getApplicationContext(),"bookmark saved!",Toast.LENGTH_SHORT).show();
               }
               else {
                 while (child.hasNext()) {
@@ -100,13 +104,18 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
                     bookmarked = new HashMap<>();
                     bookmarked.put(videoId,null);
                     myRef.child(user.getUid()).child("bookmark").updateChildren(bookmarked);
+                    Toast.makeText(getApplicationContext(),"bookmark removed!",Toast.LENGTH_SHORT).show();
                     return;
                   }
                 }
                 bookmarked = new HashMap<>();
-                bookmarked.put(videoId,new VideoModel(videoTitle,videoId));
+                HashMap<String,String> videomodel = new HashMap<>();
+                videomodel.put("VideoId",videoId);
+                videomodel.put("VideoName",videoTitle);
+                bookmarked.put(videoId,videomodel);
               }
               myRef.child(user.getUid()).child("bookmark").updateChildren(bookmarked);
+              Toast.makeText(getApplicationContext(),"bookmark saved!",Toast.LENGTH_SHORT).show();
             }
 
             @Override
