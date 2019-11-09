@@ -73,7 +73,7 @@ public class Homefragment extends Fragment {
             signupCard.setVisibility(View.GONE);
         }
 
-//        goTest = view.findViewById(R.id.goTest);
+        goTest = view.findViewById(R.id.demo_make_word);
         signin = view.findViewById(R.id.sign_in);
         mCourses.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchButton = view.findViewById(R.id.search_button);
@@ -92,14 +92,14 @@ public class Homefragment extends Fragment {
             }
         });
 
-//        goTest.setOnClickListener(new View.OnClickListener() { //listener for goTest button takes the user to TestFragment for test
-//            @Override
-//            public void onClick(View view) {
-//                //((MainActivity)getActivity()).loadFragment(TestFragment.newInstance());
-//                Intent intent = new Intent(getActivity(), MakeWordActivity.class);
-//                getActivity().startActivity(intent);
-//            }
-//        });
+        goTest.setOnClickListener(new View.OnClickListener() { //listener for goTest button takes the user to TestFragment for test
+            @Override
+            public void onClick(View view) {
+                //((MainActivity)getActivity()).loadFragment(TestFragment.newInstance());
+                Intent intent = new Intent(getActivity(), DemoMakeWordActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
 
         setRecyclerView(); //calling the function below to do query stuff

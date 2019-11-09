@@ -57,6 +57,6 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:3.0.7'
 
-    //compile project(":VSA_GAMES_DEMO")
+    compile project(":VSA_GAMES_DEMO")
 
 }

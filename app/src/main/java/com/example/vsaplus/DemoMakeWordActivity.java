@@ -60,7 +60,8 @@ public class DemoMakeWordActivity extends AppCompatActivity{
     HashMap<String[], String> makeWordData = new HashMap<String[], String>();
 
 
-    int temp;
+    boolean response;
+    boolean check;
 
     private FirebaseFirestore rootref = FirebaseFirestore.getInstance();
 
@@ -80,6 +81,8 @@ public class DemoMakeWordActivity extends AppCompatActivity{
         String[] question4 = new String[]{"여", "보", "세", "요"};
         String[] question5 = new String[]{"죄", "송", "합", "니", "다"};
 
+
+
         String photo1 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fgreet.jpg?alt=media&token=7b416195-2e37-41e4-afc6-dc47a079d397";
         String photo2 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Feat.jpg?alt=media&token=2d38803d-2004-412b-b8bd-c49bad036f2a";
         String photo3 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fthanks.jpg?alt=media&token=bd38bf74-7860-45f9-a373-2dc79c2cec4f";
@@ -92,61 +95,48 @@ public class DemoMakeWordActivity extends AppCompatActivity{
         makeWordData.put(question3, photo3);
         makeWordData.put(question4, photo4);
         makeWordData.put(question5, photo5);
-
-
-
-
-
-
-        DocumentReference docRef = rootref.collection("WordmakingGame").document("사과");
-        Source source  = Source.CACHE;
-       docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    answer = (List<String>) document.get("userInputBuffer");
-                    list = (List<String>) document.get("userInputOptions");
-                    imageUrl = document.getString("photoUrl");
-                    Picasso.get()
-                            .load(imageUrl)
-                            .fit()
-                            .centerInside()
-                            .into(imageHint);
-                    Collections.shuffle(list);
-                    imageSetter(list, answer);
-
-                    Log.d("WordMakeanswer", answer.toString());
-                    Log.d("WordMakeoptions", list.toString());
-                }
-
-            else
-
-            {
-                Log.d("WordMake", "Error getting documents: ", task.getException());
-            }
-        }
-        });
-
-        Log.d("size", "answercount: " + userAnswerContainer.getChildCount());
-        Log.d("size", "answersize: " + temp);
-
-
+        List keys = new ArrayList(makeWordData.keySet());
+        Collections.shuffle(keys);
+        Log.d("keys", ""+ keys.toString());
+        check = true;
+        shuffle(makeWordData);
 
     }
 
+
     public void shuffle(HashMap<String[], String> toShuffle)
     {
-       for(Object key : toShuffle.keySet())
-       {
-           List<String> temp = Arrays.asList((String)key);
-       }
+
+        for (Object key : toShuffle.keySet()) {
+            Log.d("check", ""+ check);
+            if(check == true) {
+                List<String> temp = new ArrayList<>();
+                List<String> answer = new ArrayList<>();
+                String[] tempKey = (String[]) key;
+                int length = tempKey.length;
+                for (int i = 0; i < length; i++) {
+                    temp.add(tempKey[i]);
+                    answer.add(tempKey[i]);
+                }
+                Log.d("list", "list is: " + answer.toString());
+                Collections.shuffle(temp);
+                Log.d("list", "list is shuffled: " + temp.toString());
+                Log.d("list", "list is shuffled: " + answer.toString());
+                imageSetter(temp, answer);
+
+                Picasso.get()
+                        .load(toShuffle.get(key))
+                        .fit()
+                        .centerInside()
+                        .into(imageHint);
+            }
+        }
     }
 
     public void imageSetter(List<String>wordList,List<String>answer)
     {
         int j;
-
+        response = false;
         answerFragments = new TextView[wordList.size()];
         for(j = 0; j<wordList.size(); j++)
         {
@@ -156,10 +146,9 @@ public class DemoMakeWordActivity extends AppCompatActivity{
             answerFragment.setTextSize(40);
             answerFragment.setPadding(20,10,10,10);
             userOptionContainer.addView(answerFragment);
+            check = false;
             answerFragment.setOnClickListener(handleOnClick(answer, answerFragment, j));
         }
-
-
     }
 
     View.OnClickListener handleOnClick(final List<String> answer, final TextView textView, final int index)
@@ -186,13 +175,14 @@ public class DemoMakeWordActivity extends AppCompatActivity{
                 temp = answer.size();
                 Log.d("size", "answersizef: " + temp);
 
-                if(userAnswerContainer.getChildCount() == temp)
+                if(userAnswerContainer.getChildCount() == answer.size())
                 {
                     checkMark.playAnimation();
                     checkMark.addAnimatorListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             finish();
+                            startActivity(getIntent());
                         }
                     });
                 }
@@ -203,4 +193,9 @@ public class DemoMakeWordActivity extends AppCompatActivity{
 
         return onClickListener;
     }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
 }
