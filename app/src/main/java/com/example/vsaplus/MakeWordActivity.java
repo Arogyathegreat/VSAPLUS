@@ -30,6 +30,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class MakeWordActivity extends AppCompatActivity{
@@ -104,7 +105,7 @@ public class MakeWordActivity extends AppCompatActivity{
         Log.d("size", "answercount: " + userAnswerContainer.getChildCount());
         Log.d("size", "answersize: " + temp);
 
-
+        HashMap<List<String>, String> data = new HashMap<List<String>, String>();
 
     }
 

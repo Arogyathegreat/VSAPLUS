@@ -6,44 +6,24 @@ import java.util.List;
 
 public class GameModel {
 
-    private String gameAnswer;
-    //private List<String> gameAnswerArray = new ArrayList<>();
-    //private List<String> gameOptions = new ArrayList<>();
-    private String gameType;
+    private String questionName;
     private String photoUrl;
-    private HashMap<String, String> Game;
 
     public GameModel(){}
 
-    public GameModel(String gameType, String photoUrl, String gameAnswer, HashMap<String, String> Game)
+    public GameModel(String questionName, String photoUrl)
     {
-        this.gameAnswer = gameAnswer;
-        //this.gameAnswerArray = gameAnswerArray;
-        //this.gameOptions = gameOptions;
-        this.gameType = gameType;
+        this.questionName = questionName;
         this.photoUrl = photoUrl;
-        this.Game = Game;
     }
 
-    public HashMap<String, String> getGame(){return Game;}
-
-    public String getGameAnswer(){
-        return gameAnswer;
+    public String getQuestionName()
+    {
+        return questionName;
     }
 
-//    public List<String> getGameAnswerArray(){
-//        return gameAnswerArray;
-//    }
-//
-//    public List<String> getGameOptions(){
-//        return gameOptions;
-//    }
-
-    public String getGameType(){
-        return gameType;
-    }
-
-    public String getPhotoUrl(){
+    public String getPhotoUrl()
+    {
         return photoUrl;
     }
 
