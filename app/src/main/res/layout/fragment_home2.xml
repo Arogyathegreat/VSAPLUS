@@ -133,6 +133,14 @@
                     </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/demo_make_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="play"
+                >
+            </Button>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

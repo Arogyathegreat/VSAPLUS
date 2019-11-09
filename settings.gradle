@@ -1,1 +1,1 @@
-include ':app', ':VSA_GAMES_DEMO'
+include ':app'

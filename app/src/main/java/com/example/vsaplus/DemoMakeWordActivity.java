@@ -137,11 +137,10 @@ public class DemoMakeWordActivity extends AppCompatActivity{
 
     public void shuffle(HashMap<String[], String> toShuffle)
     {
-        for(String i[] : toShuffle.keySet())
-        {
-            List<String> temp = Arrays.asList(i);
-            Collections.shuffle(temp);
-        }
+       for(Object key : toShuffle.keySet())
+       {
+           List<String> temp = Arrays.asList((String)key);
+       }
     }
 
     public void imageSetter(List<String>wordList,List<String>answer)
