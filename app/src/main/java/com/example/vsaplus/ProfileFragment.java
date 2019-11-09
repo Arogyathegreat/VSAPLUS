@@ -125,17 +125,29 @@ public class ProfileFragment extends Fragment {
        // statusBox.setText(myRef.child(user.getUid()).child("status").);
         if (user != null) {
             // User is signed in
+            score = v.findViewById(R.id.score);
+            myRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d("tag", "onAuthStateChanged:signed_in:" + user.getUid());
+                    String status = (String)dataSnapshot.child("status").getValue();
+                    if(status == null){
+                        status = "";
+                    }
+                    statusBox.setText(status);
+                    String scoredata = (String)dataSnapshot.child("score").getValue();
+                    if(scoredata==null) {
+                        scoredata = "0";
+                    }
+                    score.setText(scoredata);
+                }
 
-            Log.d("tag", "onAuthStateChanged:signed_in:" + user.getUid());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            sharedPreferences = getContext().getSharedPreferences("email", Context.MODE_PRIVATE);
+                }
+            });
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("uid", user.getUid());
-            editor.putString("email", user.getEmail());
-
-            editor.apply();
-            statusBox.setText(sharedPreferences.getString("status",""));
         }
 
         statusBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -143,36 +155,16 @@ public class ProfileFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if(i == EditorInfo.IME_ACTION_DONE){
                     user = mAuth.getCurrentUser();
-
-                    sharedPreferences = getContext().getSharedPreferences("email", Context.MODE_PRIVATE);
-                    stUid = sharedPreferences.getString("uid", "");
-                    stEmail = sharedPreferences.getString("email", "");
-
-                    String userphoto = String.valueOf(user.getPhotoUrl());
                     String statusdata = statusBox.getText().toString();
                     HashMap<String, String> profile = new HashMap<String, String>();
-                    profile.put("email",stEmail);
-                    profile.put("photo",userphoto);
                     profile.put("status",statusdata);
                     Map<String, Object> inputprofile = new HashMap<String, Object>(profile);
-
-                    myRef.child(stUid).updateChildren(inputprofile);
-
-                    sharedPreferences = getContext().getSharedPreferences("email", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("status",statusdata);
-                    editor.putString("uid", user.getUid());
-                    editor.putString("email", user.getEmail());
-                    editor.apply();
-
-
+                    myRef.child(user.getUid()).updateChildren(inputprofile);
+                    statusBox.setText(statusdata);
                     }
-
-
-                return false; }
+                return false;
+            }
         });
-
-
 
         String userID;
         if(Profile.getCurrentProfile()==null||Profile.getCurrentProfile().getId().equals("")){//firebase user logic
@@ -197,26 +189,7 @@ public class ProfileFragment extends Fragment {
                             }
                         });
             }
-            myRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String s = dataSnapshot.getValue().toString();
-                    Log.d("start","value is " + dataSnapshot.getValue());
-                    String stStatus = dataSnapshot.child("status").getValue().toString();
-                    sharedPreferences = getApplicationContext().getSharedPreferences("email", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("status",stStatus);
-                    editor.putString("uid", user.getUid());
-                    editor.putString("email", user.getEmail());
-                    editor.apply();
-                    Log.d("Profile", s+stStatus);
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-//                Toast.makeText(getActivity(), "업로드 실패!", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
         else{//facebook user
             userID = Profile.getCurrentProfile().getId();
@@ -228,8 +201,6 @@ public class ProfileFragment extends Fragment {
             uploadimage.put("photo",photouri);
             myRef.child(user.getUid()).updateChildren(uploadimage);
         }
-
-
 
         settingsButton = (ImageButton)v.findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
