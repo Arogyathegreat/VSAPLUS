@@ -15,6 +15,7 @@
         <activity android:name=".MakeWordActivity" />
         <activity android:name=".DragAndDropActivity" />
         <activity android:name = ".DemoMakeWordActivity"/>
+        <activity android:name=".DemoDragAndDropActivity"/>
         <activity
             android:name=".YouTubePlayerActivity"
             android:configChanges="orientation|screenSize" />
