@@ -2,6 +2,7 @@ package com.example.vsaplus;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -55,11 +56,8 @@ public class DemoMakeWordActivity extends AppCompatActivity{
     List<String> list = new ArrayList<>();
     List<String> answer = new ArrayList<>();
 
-
-
-    HashMap<String[], String> makeWordData = new HashMap<String[], String>();
-
-
+    static int refreshCheck = 4;
+    static int score = 30;
     boolean response;
     boolean check;
 
@@ -88,16 +86,13 @@ public class DemoMakeWordActivity extends AppCompatActivity{
         String photo3 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fthanks.jpg?alt=media&token=bd38bf74-7860-45f9-a373-2dc79c2cec4f";
         String photo4 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fhello.jpg?alt=media&token=ab5f9e4b-5f03-490d-bb05-c444cab434b0";
         String photo5 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fsorry.jpg?alt=media&token=bc481f99-ee6e-46ac-9ce9-eff50b9fb5cf";
-
+        HashMap<String[], String> makeWordData = new HashMap<String[], String>();
 
         makeWordData.put(question1, photo1);
         makeWordData.put(question2, photo2);
         makeWordData.put(question3, photo3);
         makeWordData.put(question4, photo4);
         makeWordData.put(question5, photo5);
-        List keys = new ArrayList(makeWordData.keySet());
-        Collections.shuffle(keys);
-        Log.d("keys", ""+ keys.toString());
         check = true;
         shuffle(makeWordData);
 
@@ -170,7 +165,11 @@ public class DemoMakeWordActivity extends AppCompatActivity{
                     answerView.setText(textFromTV);
                     userAnswerContainer.addView(answerView);
                 }
-                else buffer.remove(textFromTV);
+                else {
+                    buffer.remove(textFromTV);
+                    score -= 2;
+                    if(score <= 0) score = 0;
+                }
 
                 temp = answer.size();
                 Log.d("size", "answersizef: " + temp);
@@ -181,8 +180,19 @@ public class DemoMakeWordActivity extends AppCompatActivity{
                     checkMark.addAnimatorListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            finish();
-                            startActivity(getIntent());
+                            if(refreshCheck>0) {
+                                userAnswerContainer.removeAllViews();
+                                userOptionContainer.removeAllViews();
+                                recreate();
+                                refreshCheck--;
+                                Log.d("refresh", ""+ refreshCheck);
+                            }else
+                                {
+                                    Intent intent = new Intent(DemoMakeWordActivity.this, EndScreenActivity.class);
+                                    intent.putExtra("unityScore", score);
+                                    startActivity(intent);
+                                    finish();
+                                }
                         }
                     });
                 }
@@ -194,8 +204,5 @@ public class DemoMakeWordActivity extends AppCompatActivity{
         return onClickListener;
     }
 
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
 
 }
