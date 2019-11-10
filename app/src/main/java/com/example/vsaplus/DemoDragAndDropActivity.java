@@ -45,11 +45,12 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
     List<String[]> questions = new ArrayList<>();
     List<String> photos = new ArrayList<>();
 
-    HashMap<String[], String> data = new HashMap<>();
 
     String[] answerText;
     int superIndex;
     int score = 30;
+
+    int refreshCheck = 4;
 
     TextView hintText;
     @Override
@@ -75,6 +76,7 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         String photo3 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fthanks.jpg?alt=media&token=bd38bf74-7860-45f9-a373-2dc79c2cec4f";
         String photo4 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fhello.jpg?alt=media&token=ab5f9e4b-5f03-490d-bb05-c444cab434b0";
         String photo5 = "https://firebasestorage.googleapis.com/v0/b/team-default.appspot.com/o/demo%2Fsorry.jpg?alt=media&token=bc481f99-ee6e-46ac-9ce9-eff50b9fb5cf";
+        HashMap<String[], String> data = new HashMap<>();
 
         data.put(question1, photo1);
         data.put(question2, photo2);
@@ -82,8 +84,7 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         data.put(question4, photo4);
         data.put(question5, photo5);
 
-        List keys = new ArrayList(data.keySet());
-        Collections.shuffle(keys);
+
         shuffle(data);
 
 
@@ -100,13 +101,13 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         List<String[]> answer = new ArrayList<>();
         List<String> pictures = new ArrayList<>();
 
-
         for(Object key: toShuffle.keySet())
         {
             String[] temp = (String[])key;
             answer.add(temp);
             pictures.add(toShuffle.get(key));
         }
+
 
         Random random = new Random();
         superIndex = random.nextInt(3);
@@ -122,6 +123,9 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
                     .fit()
                     .centerInside()
                     .into(imgTest);
+
+            Log.d("pictures", "pictures: "+ pictures.get(i));
+            Log.d("bug", ""+ pictures.toString());
 
             topcontainer.addView(imgTest);
             imgTest.getLayoutParams().height = 300;
@@ -221,17 +225,25 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
                             checkMark.addAnimatorListener(new AnimatorListenerAdapter() {
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    finish();
-                                    startActivity(getIntent());
+                                   if(refreshCheck>0) {
+                                       topcontainer.removeAllViews();
+                                       bottomLinearLayout.removeAllViews();
+                                       onCreate(new Bundle());
+                                       refreshCheck--;
+                                   }
+                                   else{
+                                       Intent intent = new Intent(DemoDragAndDropActivity.this, EndScreenActivity.class);
+                                       intent.putExtra("unityScore", score);
+                                       startActivity(intent);
+                                       finish();
+                                   }
                                 }
-
-
                         });
                         }
                         return true;
                     default:
                         Log.i("Start", "default");
-                        score-= 5;
+                        score-= 3;
                         if(score<= 0) score = 0;
                         return false;
                 }
@@ -256,4 +268,5 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
 
 
     }
+
 }
