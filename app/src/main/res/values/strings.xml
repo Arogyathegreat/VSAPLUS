@@ -50,6 +50,8 @@
     <string name="password_reset">A link will be sent to your email for your password reset.</string>
 
     //bookmark fragment
-    <string name = "bookmark_unavailable">We are currently working hard on this feature. Sorry for the inconvenience.</string>
+    <string name="bookmark_unavailable">We are currently working hard on this feature. Sorry for the inconvenience.</string>
+
+    <string name = "license">VSA for Android</string>
 
 </resources>

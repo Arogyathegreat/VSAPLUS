@@ -96,8 +96,8 @@ public class Homefragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //((MainActivity)getActivity()).loadFragment(TestFragment.newInstance());
-                Intent intent = new Intent(getActivity(), DemoMakeWordActivity.class);
-                getActivity().startActivity(intent);
+                ((MainActivity)getActivity()).loadFragment(LicenseFragment.newInstance());
+
             }
         });
 
