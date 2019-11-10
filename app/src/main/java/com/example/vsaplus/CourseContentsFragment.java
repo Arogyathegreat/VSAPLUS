@@ -56,6 +56,10 @@ public class CourseContentsFragment extends Fragment {
     private String photoUrl;
     private String gameType;
     private Button goGame;
+
+    private Button dragGame;
+    private Button makeworkGame;
+
     private int test;
 
     GameTestActivity gameTestActivity = new GameTestActivity();
@@ -92,7 +96,9 @@ public class CourseContentsFragment extends Fragment {
         colorLayout = (RelativeLayout) view.findViewById(R.id.head_container);
         lectureList = (RecyclerView)view.findViewById(R.id.lecture_container);
         lectureList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        goGame = (Button)view.findViewById(R.id.go_game);
+        goGame = (Button)view.findViewById(R.id.tower);
+        dragGame = view.findViewById(R.id.drag);
+        makeworkGame = view.findViewById(R.id.make);
 
         colorChangewithType(sCourseType); //calling for the color change function with the course type string
 
@@ -122,6 +128,22 @@ public class CourseContentsFragment extends Fragment {
 
         mCourseType.setText(sCourseType);
         mCourseName.setText(sCourseName);
+
+        dragGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), DemoDragAndDropActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        makeworkGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), DemoMakeWordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         DocumentReference docRef = rootRef.collection("Introduction to Hangul").document("History of Hangul");
 
