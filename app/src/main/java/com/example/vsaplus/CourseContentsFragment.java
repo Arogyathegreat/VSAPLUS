@@ -97,7 +97,7 @@ public class CourseContentsFragment extends Fragment {
         colorChangewithType(sCourseType); //calling for the color change function with the course type string
 
 
-        Query query = rootRef.collection(sCourseName).orderBy("Video_insensitive", Query.Direction.ASCENDING);
+        Query query = rootRef.collection("Demo").document(sCourseName).collection("Lectures").orderBy("Video_insensitive", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<VideoModel> options = new FirestoreRecyclerOptions.Builder<VideoModel>()
                 .setQuery(query, VideoModel.class)

@@ -48,8 +48,8 @@ public class GamelistFragment extends Fragment {
             public void onClick(View view) {
                 index = random.nextInt(2);
                 Log.d("randomint", ""+index);
-                Intent intent1 = new Intent(getActivity(), MakeWordActivity.class);
-                Intent intent2 = new Intent(getActivity(), DragAndDropActivity.class);
+                Intent intent1 = new Intent(getActivity(), DemoMakeWordActivity.class);
+                Intent intent2 = new Intent(getActivity(), DemoDragAndDropActivity.class);
                 if(index == 1) getActivity().startActivity(intent1);
                 else    getActivity().startActivity(intent2);
             }

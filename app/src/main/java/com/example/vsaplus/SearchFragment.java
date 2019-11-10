@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
         if (!searchText.matches("")) {
 
             //setting query in the preferred location in firestore
-            Query query = rootRef.collection("VSAPLUS").document("Courses").collection("Introduction to Hangul").orderBy("VideoName_insensitive", Query.Direction.ASCENDING).startAt(searchText).endAt(searchText + "\uf8ff");
+            Query query = rootRef.collection("Demo").document("Korean Phrases").collection("Lectures").orderBy("VideoName_insensitive", Query.Direction.ASCENDING).startAt(searchText).endAt(searchText + "\uf8ff");
 
           //options for adapter, takes the query above and sets it to videomodel class
             FirestoreRecyclerOptions<VideoModel> options = new FirestoreRecyclerOptions.Builder<VideoModel>()
