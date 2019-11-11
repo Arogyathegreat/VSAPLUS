@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.vsaplus">
+    package="com.teamdefault.vsaplus">
 
     <application
         android:allowBackup="true"
@@ -11,16 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme, android:icon">
-        <activity android:name=".EndScreenActivity"></activity>
-        <activity android:name=".MakeWordActivity" />
-        <activity android:name=".DragAndDropActivity" />
-        <activity android:name = ".DemoMakeWordActivity"/>
-        <activity android:name=".DemoDragAndDropActivity"/>
+        <activity android:name="com.teamdefault.vsaplus.EndScreenActivity"></activity>
+        <activity android:name="com.teamdefault.vsaplus.MakeWordActivity" />
+        <activity android:name="com.teamdefault.vsaplus.DragAndDropActivity" />
+        <activity android:name = "com.teamdefault.vsaplus.DemoMakeWordActivity"/>
+        <activity android:name="com.teamdefault.vsaplus.DemoDragAndDropActivity"/>
         <activity
-            android:name=".YouTubePlayerActivity"
+            android:name="com.teamdefault.vsaplus.YouTubePlayerActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.teamdefault.vsaplus.MainActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

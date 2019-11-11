@@ -61,6 +61,35 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:333081754309:android:08b33f97b38c4460b40eac",
+        "android_client_info": {
+          "package_name": "com.teamdefault.vsaplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333081754309-eau9savidl296k89u99trr6rsfhbkg0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf75D8r9kk2Hw2IzFfMeNRvbxWn_YGFTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333081754309-eau9savidl296k89u99trr6rsfhbkg0g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:333081754309:android:ff22228554a7b983",
         "android_client_info": {
           "package_name": "org.techtown.team_default"
