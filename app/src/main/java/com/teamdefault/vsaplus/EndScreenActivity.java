@@ -1,7 +1,9 @@
 package com.teamdefault.vsaplus;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.vsagames.demo.GameTestActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -9,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.vsagames.demo.GameTestActivity;
 
 public class EndScreenActivity extends AppCompatActivity {
     final String TAG = "EndScreenActivity";
