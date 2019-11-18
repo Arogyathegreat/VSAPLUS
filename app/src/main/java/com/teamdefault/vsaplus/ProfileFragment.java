@@ -111,11 +111,18 @@ public class ProfileFragment extends Fragment {
                         status = "";
                     }
                     statusBox.setText(status);
-                    String scoredata = (String)dataSnapshot.child("score").getValue();
-                    if(scoredata==null) {
+                    String scoredata=null;
+                    try {
+                         scoredata = dataSnapshot.child("score").getValue().toString();
+
+                    }
+                    catch(NullPointerException e){
                         scoredata = "0";
                     }
-                    score.setText(scoredata);
+                    finally {
+                        score.setText(scoredata);
+                    }
+
                 }
 
                 @Override
