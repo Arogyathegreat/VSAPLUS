@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,11 +35,6 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
     private LinearLayout checkMarkContainer;
     private LottieAnimationView checkMark;
     private FirebaseFirestore rootref = FirebaseFirestore.getInstance();
-    private String imageUrl1;
-
-    ImageView[] optionImg;
-    List<String[]> questions = new ArrayList<>();
-    List<String> photos = new ArrayList<>();
 
 
     String[] answerText;
@@ -46,8 +42,6 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
     int score = 30;
     int hashmapIndex;
     Integer[] index;
-    HashMap <String[], String> answerMapping = new HashMap<>();
-
     int refreshCheck = 4;
     int displayDataIndex = 0;
 
@@ -117,22 +111,16 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         hashmapIndex = index[displayDataIndex];
 
         answerText = questions.get(hashmapIndex);
-        List<Integer> image_id_shuffle = new ArrayList<>();
-        List<String> image_shuffle = new ArrayList<>();
         Random random = new Random();
-        image_shuffle.add(photos.get(hashmapIndex));
-        image_id_shuffle.add(hashmapIndex);
 
         HashMap<Integer, String> mapping = new HashMap<>();
         mapping.put(hashmapIndex,photos.get(hashmapIndex));
 
-        while(image_shuffle.size()<3)
+        while(mapping.size()<3)
         {
             int randomImg = random.nextInt(5);
-            if(!image_shuffle.contains(photos.get(randomImg)))
+            if(!mapping.containsValue(photos.get(randomImg)))
             {
-                image_id_shuffle.add(randomImg);
-                image_shuffle.add(photos.get(randomImg));
                 mapping.put(randomImg, photos.get(randomImg));
             }
         }
@@ -150,10 +138,14 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
                     .into(imgDisplay);
 
             topcontainer.addView(imgDisplay);
-            imgDisplay.getLayoutParams().height = 300;
-            imgDisplay.getLayoutParams().width= 300;
+            imgDisplay.getLayoutParams().height = 370;
+            imgDisplay.getLayoutParams().width= 370;
+            imgDisplay.setPadding(5,0,5,0);
             imgDisplay.setOnLongClickListener(DemoDragAndDropActivity.this::onLongClick);
         }
+
+
+
         TextView hintText = new TextView(getApplicationContext());
         String answerTextJoin = TextUtils.join("",answerText);
         hintText.setText(answerTextJoin);
@@ -161,8 +153,9 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         hintText.setTextSize(40);
         answercontainer.addView(hintText);
         displayDataIndex++;
-    }
 
+    }
+    
 
     public int checkAnswer(View draggedImageView)
     {
