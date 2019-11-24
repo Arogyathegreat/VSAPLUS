@@ -9,6 +9,7 @@
     android:weightSum="2">
 
     <LinearLayout
+        android:id="@+id/check_mark_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <com.airbnb.lottie.LottieAnimationView
@@ -16,7 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:visibility="visible"
-            app:lottie_fileName="green_check_mark.json"/>
+            app:lottie_fileName="green_check_mark.json" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,18 +60,5 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_weight="1"
-        android:background="@drawable/simple_box">
-
-        <TextView
-            android:id="@+id/hint_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="사람"
-            android:textSize="40sp">
-
-        </TextView>
-
-
-
-    </LinearLayout>
+        android:background="@drawable/simple_box"/>
 </LinearLayout>
