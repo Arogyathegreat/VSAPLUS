@@ -88,6 +88,18 @@ public class DemoMakeWordActivity extends AppCompatActivity{
 
     }
 
+    public void insertData()
+    {
+
+
+
+
+
+
+
+
+    }
+
 
     public void shuffle(HashMap<String[], String> toShuffle)
     {

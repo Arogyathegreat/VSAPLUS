@@ -210,11 +210,6 @@ public class CourseContentsFragment extends Fragment {
             RelativeLayout layout = mView.findViewById(R.id.video_layout);
             nameView.setText(videoName);
 
-            Intent sendVideoId = new Intent(getActivity(), YouTubePlayerActivity.class);
-            sendVideoId.putExtra("videoId", videoId);
-            sendVideoId.putExtra("videoTitle", videoName);
-            getActivity().startActivity(sendVideoId);
-
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

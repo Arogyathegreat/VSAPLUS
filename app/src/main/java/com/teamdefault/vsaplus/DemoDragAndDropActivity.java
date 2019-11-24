@@ -141,10 +141,10 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         for (int i = 0; i<3; i++)
         {
             ImageView imgDisplay = new ImageView(getApplicationContext());
-            imgDisplay.setId(mapping.keySet(i));
+            imgDisplay.setId((Integer)mapping.keySet().toArray()[i]);
 
             Picasso.get()
-                    .load(image_shuffle.get(i))
+                    .load((String)mapping.values().toArray()[i])
                     .fit()
                     .centerInside()
                     .into(imgDisplay);
