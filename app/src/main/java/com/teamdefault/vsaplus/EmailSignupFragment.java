@@ -109,11 +109,12 @@ public class EmailSignupFragment extends Fragment {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         Log.d(TAG, "User profile updated."+userName);
+                                                        updateUI(user);
                                                     }
                                                 }
                                             });
 
-                                    updateUI(user);
+
 
                                 } else {
                                     // If sign in fails, display a message to the user.

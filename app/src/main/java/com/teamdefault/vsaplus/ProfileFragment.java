@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
                 mSwipeRefreshWidget.setRefreshing(false);
             }
         });
-       // statusBox.setText(myRef.child(user.getUid()).child("status").);
+
         if (user != null) {
             // User is signed in
             score = v.findViewById(R.id.score);

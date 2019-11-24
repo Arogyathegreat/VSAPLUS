@@ -158,9 +158,9 @@ public class CourseContentsFragment extends Fragment {
                     public void onClick(View view) {
                         Intent toUnity = new Intent(getActivity(), GameTestActivity.class);
                         toUnity.setAction(Intent.ACTION_SEND);
-                        toUnity.putExtra("gameType", "tower");
-                        toUnity.putExtra("gameAnswer", gameAnswer);
-                        toUnity.putExtra("photoUrl", photoUrl);
+                        //toUnity.putExtra("gameType", "tower");
+                        //toUnity.putExtra("gameAnswer", gameAnswer);
+                        //toUnity.putExtra("photoUrl", photoUrl);
                         Log.d("gameTest", "URL: " + photoUrl);
                         getActivity().startActivity( toUnity);
                     }

@@ -12,6 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -27,6 +29,7 @@ import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Main youtubeplayer for the app
@@ -34,13 +37,15 @@ import java.util.Iterator;
 
 public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implements
     View.OnClickListener,
-    YouTubePlayer.OnFullscreenListener {
+    YouTubePlayer.OnFullscreenListener, YouTubePlayer.PlayerStateChangeListener, YouTubePlayer.PlaybackEventListener {
 
   //not used but might be needed for later changes
   private static final int PORTRAIT_ORIENTATION = Build.VERSION.SDK_INT < 9
       ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
       : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
-
+  private long starttime = 0;
+  private long endtime  = 0;
+  private long timebuf = 0;
   private LinearLayout baseLayout; //the whole layout
   private YouTubePlayerView playerView; //the youtubeplayer video player
   private YouTubePlayer player; //calling the YoutubePlayer class for all its methods
@@ -126,7 +131,8 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
     player.setPlayerStyle(DEFAULT); //current youtubeplayerview style
     player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT); //flag for handling fullscreen
     player.setOnFullscreenListener(this);
-
+    player.setPlaybackEventListener(this);
+    player.setPlayerStateChangeListener(this);
     Bundle bundle = getIntent().getExtras();  //getting videoid and videotitle from bundle
 
     final String videoId = bundle.getString("videoId");
@@ -173,5 +179,70 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
     super.onConfigurationChanged(newConfig);
     doLayout();
   }
+
+  @Override
+  public void onLoading (){
+  }
+  @Override
+  public void onLoaded(String videoId){
+    player.play();
+    starttime = System.currentTimeMillis();
+  }
+  public void onAdStarted (){}
+  public void onError (YouTubePlayer.ErrorReason reason){}
+  public void onVideoEnded (){}
+  public void onVideoStarted (){
+
+  }
+  @Override
+  public void onPlaying(){
+
+  }
+  @Override
+  public void onBuffering (boolean isBuffering){
+
+  }
+  @Override
+  public void onPaused (){
+
+  }
+  @Override
+  public void onSeekTo (int newPositionMillis){
+
+  }
+  @Override
+  public void onStopped (){
+
+  }
+  public void onVideoFinished(){
+    endtime = System.currentTimeMillis();
+    timebuf = endtime - starttime;
+
+    if(timebuf >= player.getDurationMillis()*0.8){
+      myRef.child(user.getUid()).child("score").addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+          long score = dataSnapshot.getValue(Long.class);
+          score += 10L;
+          myRef.child(user.getUid()).child("score").setValue(score);
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+      });
+    }
+
+  }
+
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    onVideoFinished();
+  }
+
 
 }
