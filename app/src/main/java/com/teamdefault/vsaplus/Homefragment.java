@@ -103,7 +103,7 @@ public class Homefragment extends Fragment {
 
 
     private void setRecyclerView(){
-        Query query = rootRef.collection("Demo"); //query the main root for courses
+        Query query = rootRef.collection("Demo").orderBy("index"); //query the main root for courses
         FirestoreRecyclerOptions<CourseModel> options = new FirestoreRecyclerOptions.Builder<CourseModel>()  //recycler options taking Coursemodel class and query which is later set on the adapter
                 .setQuery(query, CourseModel.class)
                 .build();

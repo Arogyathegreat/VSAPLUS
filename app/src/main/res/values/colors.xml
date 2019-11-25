@@ -14,10 +14,10 @@
 
 
     <color name="beginner">#49b654</color>
-    <color name="beginner_tv">#a0d976</color>
+    <color name="beginner_tv">#daf0dd</color>
 
     <color name="intermediate">#b51ba8</color>
-    <color name="intermediate_tv">#e75fdc</color>
+    <color name="intermediate_tv">#f3aded</color>
 
     <color name="advanced">#02276f</color>
     <color name="advanced_tv">#97b9fd</color>
