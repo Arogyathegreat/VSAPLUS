@@ -21,10 +21,12 @@
             android:layout_centerVertical="true">
         </ImageButton>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Write"
+
             android:layout_toEndOf="@id/exit_post"
             android:textSize="25sp"
             android:fontFamily="@font/leelawadee"

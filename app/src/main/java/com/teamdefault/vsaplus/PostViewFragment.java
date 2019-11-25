@@ -50,6 +50,7 @@ public class PostViewFragment extends Fragment {
     DatabaseReference userRef = database1.getReference("users");
     int postnum = 0;
     boolean liked = false;
+    ImageButton delete;
     String title = null;
     String contents = null;
     String userUid=null;
@@ -82,7 +83,7 @@ public class PostViewFragment extends Fragment {
              postnum = getArguments().getInt("postnum");
              userUid = getArguments().getString("UserUid");
             replynum = getArguments().getInt("Reply");
-
+        delete = v.findViewById(R.id.delete_post);
         TextView username = v.findViewById(R.id.user_ID);
         TextView titlepost = v.findViewById(R.id.post_title);
         TextView actualpost = v.findViewById(R.id.actual_post);
@@ -106,6 +107,19 @@ public class PostViewFragment extends Fragment {
         titlepost.setText(title);
         actualpost.setText(contents);
         Likecount.setText(Like+"");
+        if(userUid.equals(user.getUid())){
+            delete.setVisibility(View.VISIBLE);
+        }
+        else{
+            delete.setVisibility(View.GONE);
+        }
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myRef.child("post").child(postnum-2*postnum+"").removeValue();
+                ((MainActivity)getActivity()).loadFragment(CommunityFragment.newInstance());
+            }
+        });
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
