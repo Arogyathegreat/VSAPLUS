@@ -90,9 +90,6 @@ public class CourseContentsFragment extends Fragment {
         colorLayout = (RelativeLayout) view.findViewById(R.id.head_container);
         lectureList = (RecyclerView)view.findViewById(R.id.lecture_container);
         lectureList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        goGame = (Button)view.findViewById(R.id.tower);
-        dragGame =(Button) view.findViewById(R.id.drag);
-        makeworkGame = view.findViewById(R.id.make);
 
         colorChangewithType(sCourseType); //calling for the color change function with the course type string
 
@@ -113,7 +110,7 @@ public class CourseContentsFragment extends Fragment {
             @NonNull
             @Override
             public VideosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.customlist_search, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_course_contents, parent, false);
                 return new VideosViewHolder(view);
             }
         };
@@ -123,21 +120,7 @@ public class CourseContentsFragment extends Fragment {
         mCourseType.setText(sCourseType);
         mCourseName.setText(sCourseName);
 
-        dragGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), DemoDragAndDropActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        makeworkGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), DemoMakeWordActivity.class);
-                startActivity(intent);
-            }
-        });
 
         DocumentReference docRef = rootRef.collection("Introduction to Hangul").document("History of Hangul");
 
@@ -153,18 +136,18 @@ public class CourseContentsFragment extends Fragment {
                 Log.d("gameTest", "URL: " + photoUrl);
 
 
-                goGame.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent toUnity = new Intent(getActivity(), GameTestActivity.class);
-                        toUnity.setAction(Intent.ACTION_SEND);
-                        //toUnity.putExtra("gameType", "tower");
-                        //toUnity.putExtra("gameAnswer", gameAnswer);
-                        //toUnity.putExtra("photoUrl", photoUrl);
-                        Log.d("gameTest", "URL: " + photoUrl);
-                        getActivity().startActivity( toUnity);
-                    }
-                });
+//                goGame.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent toUnity = new Intent(getActivity(), GameTestActivity.class);
+//                        toUnity.setAction(Intent.ACTION_SEND);
+//                        //toUnity.putExtra("gameType", "tower");
+//                        //toUnity.putExtra("gameAnswer", gameAnswer);
+//                        //toUnity.putExtra("photoUrl", photoUrl);
+//                        Log.d("gameTest", "URL: " + photoUrl);
+//                        getActivity().startActivity( toUnity);
+//                    }
+//                });
             }        });
 
 

@@ -8,7 +8,8 @@
         android:id="@+id/head_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/advanced">
+        android:background="@color/advanced"
+        >
 
         <TextView
             android:id="@+id/course_type"
@@ -17,23 +18,27 @@
             android:text="Beginners"
             android:textColor="#97b9fd"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="80dp"
             android:textSize="20sp"
-            android:fontFamily="@font/leelawadee"/>
+            android:fontFamily="@font/leelawadee"
+            android:gravity="center"
+            android:layout_marginTop="30dp"/>
 
         <TextView
+            android:layout_centerInParent="true"
             android:id="@+id/course_name"
             android:layout_below="@id/course_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Introduction to Hangul"
             android:layout_marginStart="15dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/leelawadee"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:includeFontPadding="false"
             android:lineSpacingExtra="0dp"
+            android:gravity="center"
+
             />
 
     </RelativeLayout>
@@ -55,72 +60,67 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:layout_marginTop="20dp">-->
 
-        <TextView
-            android:id="@+id/scorepleasework"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Games for this course"
-            android:textSize="20sp"
-            android:fontFamily="@font/leelawadee">
-        </TextView>
+<!--        <TextView-->
+<!--            android:id="@+id/scorepleasework"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Games for this course"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/leelawadee">-->
+<!--        </TextView>-->
 
-        <Button
-            android:id="@+id/tower"
-            android:text="Tower Game"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:fontFamily="@font/leelawadee"
-            android:textColor="@color/colorAccent"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            >
-        </Button>
+<!--        <Button-->
+<!--            android:id="@+id/tower"-->
+<!--            android:text="Tower Game"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/leelawadee"-->
+<!--            android:textColor="@color/colorAccent"-->
+<!--            android:backgroundTint="@color/colorPrimary"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            >-->
+<!--        </Button>-->
 
+<!--        <Button-->
+<!--            android:id="@+id/drag"-->
+<!--            android:text="Drag and Drop Game"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/leelawadee"-->
+<!--            android:textColor="@color/colorAccent"-->
+<!--            android:backgroundTint="@color/colorPrimary"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            >-->
+<!--        </Button>-->
 
-
-        <Button
-            android:id="@+id/drag"
-            android:text="Drag and Drop Game"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:fontFamily="@font/leelawadee"
-            android:textColor="@color/colorAccent"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            >
-        </Button>
-
-        <Button
-            android:id="@+id/make"
-            android:text="Work making game"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:fontFamily="@font/leelawadee"
-            android:textColor="@color/colorAccent"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            >
-        </Button>
+<!--        <Button-->
+<!--            android:id="@+id/make"-->
+<!--            android:text="Work making game"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/leelawadee"-->
+<!--            android:textColor="@color/colorAccent"-->
+<!--            android:backgroundTint="@color/colorPrimary"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            >-->
+<!--        </Button>-->
 
 
-
-
-
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
 

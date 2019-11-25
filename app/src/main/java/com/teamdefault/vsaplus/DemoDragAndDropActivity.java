@@ -155,7 +155,6 @@ public class DemoDragAndDropActivity extends Activity implements View.OnDragList
         displayDataIndex++;
 
     }
-    
 
     public int checkAnswer(View draggedImageView)
     {
