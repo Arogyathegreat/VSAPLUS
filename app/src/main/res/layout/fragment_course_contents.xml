@@ -20,7 +20,7 @@
             android:textSize="20sp"
             android:fontFamily="@font/leelawadee"
             android:gravity="center"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="40dp"/>
 
         <TextView
             android:layout_centerInParent="true"
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Introduction to Hangul"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:fontFamily="@font/leelawadee"
             android:textColor="@color/white"
             android:textSize="30sp"
@@ -120,6 +120,32 @@
 
 <!--    </LinearLayout>-->
 
+
+    <LinearLayout
+        android:id="@+id/game_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/game_man"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_gamecontrol"
+            android:fontFamily="@font/leelawadee"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+        </Button>
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

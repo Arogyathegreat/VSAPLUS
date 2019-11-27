@@ -73,7 +73,7 @@
             <TextView
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:text="Up Next"
+              android:text="Next Step:"
               android:textSize="20sp"
               android:fontFamily="@font/leelawadee"
               android:paddingLeft="15dp"
@@ -83,22 +83,22 @@
 
         </LinearLayout>
 
-        <View
+        <Button
+            android:id="@+id/game_man"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/dullblack"
-            android:alpha="0.3"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-
-            android:id="@+id/video_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_gamecontrol"
+            android:fontFamily="@font/leelawadee"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp">
+            android:layout_marginBottom="10dp"
+            >
+        </Button>
 
-        </androidx.recyclerview.widget.RecyclerView>
       </LinearLayout>
     </androidx.cardview.widget.CardView>
 

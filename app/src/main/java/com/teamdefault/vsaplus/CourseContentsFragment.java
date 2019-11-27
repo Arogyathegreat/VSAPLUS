@@ -2,11 +2,13 @@ package com.teamdefault.vsaplus;
 
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import com.vsagames.demo.GameTestActivity;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,16 +48,15 @@ public class CourseContentsFragment extends Fragment {
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     private RecyclerView lectureList;
     private String gameAnswer;
-    private List<String> gameAnswerArray = new ArrayList<>();
-    private List<String> gameOptions = new ArrayList<>();
     private String photoUrl;
     private String gameType;
     private Button goGame;
+    private LinearLayout gameButtonContainer;
 
     private Button dragGame;
     private Button makeworkGame;
 
-    private int test;
+    private int test = 100;
 
     GameTestActivity gameTestActivity = new GameTestActivity();
 
@@ -90,6 +92,8 @@ public class CourseContentsFragment extends Fragment {
         colorLayout = (RelativeLayout) view.findViewById(R.id.head_container);
         lectureList = (RecyclerView)view.findViewById(R.id.lecture_container);
         lectureList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        gameButtonContainer = (LinearLayout)view.findViewById(R.id.game_button_container);
+        goGame = (Button)view.findViewById(R.id.game_man);
 
         colorChangewithType(sCourseType); //calling for the color change function with the course type string
 
@@ -122,32 +126,40 @@ public class CourseContentsFragment extends Fragment {
 
 
 
-        DocumentReference docRef = rootRef.collection("Introduction to Hangul").document("History of Hangul");
+        DocumentReference docRef = rootRef.collection("Demo").document(sCourseName);
 
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot document = task.getResult();
-                        gameOptions = (List<String>)document.get("gameOptions");
-                        gameAnswer = document.getString("gameAnswer");
-                gameAnswerArray = (List<String>)document.get("gameAnswerArray");
-                gameType = document.getString("gameType");
-                photoUrl = document.getString("photoUrl");
-                Log.d("gameTest", "URL: " + photoUrl);
 
+                        gameType = document.getString("gameType");
 
-//                goGame.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent toUnity = new Intent(getActivity(), GameTestActivity.class);
-//                        toUnity.setAction(Intent.ACTION_SEND);
-//                        //toUnity.putExtra("gameType", "tower");
-//                        //toUnity.putExtra("gameAnswer", gameAnswer);
-//                        //toUnity.putExtra("photoUrl", photoUrl);
-//                        Log.d("gameTest", "URL: " + photoUrl);
-//                        getActivity().startActivity( toUnity);
-//                    }
-//                });
+                        if(gameType.equals("tower")) {
+                            gameAnswer = document.getString("gameAnswer");
+                            photoUrl = document.getString("photoUrl");
+                            Log.d("gameTest", "URL: " + photoUrl);
+                        }
+
+                goGame.setText(gameType);
+
+                goGame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent toUnity = new Intent(getActivity(), GameTestActivity.class);
+                        Intent toMakeWord = new Intent(getActivity(), DemoMakeWordActivity.class);
+                        if(gameType.equals("makeword")){
+                            getActivity().startActivity(toMakeWord);
+                        }
+                        else {
+                            toUnity.setAction(Intent.ACTION_SEND);
+                            toUnity.putExtra("gameType", "tower");
+                            toUnity.putExtra("gameAnswer", gameAnswer);
+                            Log.d("gameTest", "URL: " + photoUrl);
+                            getActivity().startActivity(toUnity);
+                        }
+                    }
+                });
             }        });
 
 
@@ -199,6 +211,7 @@ public class CourseContentsFragment extends Fragment {
                     Intent sendVideoId = new Intent(getActivity(), YouTubePlayerActivity.class);
                     sendVideoId.putExtra("videoId", videoId);
                     sendVideoId.putExtra("videoTitle", videoName);
+                    sendVideoId.putExtra("courseName", sCourseName);
                     getActivity().startActivity(sendVideoId);
 
                 }

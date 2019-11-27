@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.vsagames.demo.GameTestActivity;
+
 import java.util.Random;
 
 /**
@@ -53,6 +55,7 @@ public class GamelistFragment extends Fragment {
                 else    getActivity().startActivity(intent2);
             }
         });
+
 
         return view;
 

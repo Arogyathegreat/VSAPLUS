@@ -2,6 +2,8 @@ package com.teamdefault.vsaplus;
 
 import static com.google.android.youtube.player.YouTubePlayer.PlayerStyle.DEFAULT;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,15 +13,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.vsagames.demo.GameTestActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +51,8 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
   private static final int PORTRAIT_ORIENTATION = Build.VERSION.SDK_INT < 9
       ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
       : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
+  private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+
   private long starttime = 0;
   private long endtime  = 0;
   private long timebuf = 0;
@@ -57,7 +67,11 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
   FirebaseDatabase database = FirebaseDatabase.getInstance(); //database reference
   DatabaseReference myRef = database.getReference("users"); //reference to the users section in the database
   FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //returns current firebase user
-
+  private Button goGame;
+  private String courseName;
+  private String gameType;
+  private String photoUrl;
+  private String gameAnswer;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -66,15 +80,18 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
     playerView = (YouTubePlayerView) findViewById(R.id.player);
     mVideoTitle = (TextView)findViewById(R.id.tv_videoTitle);
     bookmark = (ImageButton)findViewById(R.id.bookmarks) ;
+    goGame = (Button)findViewById(R.id.game_man);
 
     playerView.initialize(YoutubeConfig.YOUTUBE_API_KEY, this); //class YoutubeConfig has the youtubeapi key for initializing
+    Bundle bundle = getIntent().getExtras();
+    courseName = bundle.getString("courseName");
 
     bookmark.setOnClickListener(new View.OnClickListener() {   //bookmark button onclicklistener
       @Override
       public void onClick(View view) {
-        Bundle bundle = getIntent().getExtras();
         final String videoId = bundle.getString("videoId");
         final String videoTitle = bundle.getString("videoTitle");
+
         if(user != null ) {
           myRef.child(user.getUid()).child("bookmark").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -119,6 +136,49 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
         }
       }
     });
+
+    Log.d("courseName", "name is: "+ courseName);
+
+    DocumentReference docRef = rootRef.collection("Demo").document(courseName);
+
+    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+      @Override
+      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        DocumentSnapshot document = task.getResult();
+
+        gameType = document.getString("gameType");
+
+        if(gameType.equals("tower")) {
+          gameAnswer = document.getString("gameAnswer");
+          photoUrl = document.getString("photoUrl");
+          Log.d("gameTest", "URL: " + photoUrl);
+        }
+
+        goGame.setText(gameType);
+
+        goGame.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent toUnity = new Intent(YouTubePlayerActivity.this, GameTestActivity.class);
+            Intent toMakeWord = new Intent(YouTubePlayerActivity.this, DemoMakeWordActivity.class);
+            if(gameType.equals("makeword")){
+              YouTubePlayerActivity.this.startActivity(toMakeWord);
+            }
+            else {
+              toUnity.setAction(Intent.ACTION_SEND);
+              toUnity.putExtra("gameType", "tower");
+              toUnity.putExtra("gameAnswer", gameAnswer);
+              Log.d("gameTest", "URL: " + photoUrl);
+              YouTubePlayerActivity.this.startActivity(toUnity);
+            }
+          }
+        });
+      }        });
+
+
+
+
+
 
     doLayout();
   }
@@ -241,8 +301,8 @@ public class YouTubePlayerActivity extends YouTubeFailureRecoveryActivity implem
   @Override
   public void onBackPressed() {
     super.onBackPressed();
-    onVideoFinished();
-  }
+  onVideoFinished();
+}
 
 
 }
