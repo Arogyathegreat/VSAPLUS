@@ -47,14 +47,13 @@ public class GamelistFragment extends Fragment {
         wordGame.setOnClickListener(new View.OnClickListener() { //listener for goTest button takes the user to TestFragment for test
             @Override
             public void onClick(View view) {
-                index = random.nextInt(2);
                 Log.d("randomint", ""+index);
                 Intent intent1 = new Intent(getActivity(), DemoMakeWordActivity.class);
-                Intent intent2 = new Intent(getActivity(), DemoDragAndDropActivity.class);
-                if(index == 1) getActivity().startActivity(intent1);
-                else    getActivity().startActivity(intent2);
+                getActivity().startActivity(intent1);
             }
         });
+
+
 
 
         return view;

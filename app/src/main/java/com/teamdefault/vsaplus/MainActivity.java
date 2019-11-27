@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newPosition = 1;
                 break;
 
-            case R.id.games:
-                fragment = new GamelistFragment();
+            case R.id.kakao:
+                fragment = new KakaoFragment();
                 newPosition = 2;
                 break;
 

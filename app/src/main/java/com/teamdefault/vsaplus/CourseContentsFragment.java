@@ -139,6 +139,8 @@ public class CourseContentsFragment extends Fragment {
                             gameAnswer = document.getString("gameAnswer");
                             photoUrl = document.getString("photoUrl");
                             Log.d("gameTest", "URL: " + photoUrl);
+                            Log.d("gameTest", "URL: " + gameAnswer);
+
                         }
 
                 goGame.setText(gameType);
@@ -153,8 +155,9 @@ public class CourseContentsFragment extends Fragment {
                         }
                         else {
                             toUnity.setAction(Intent.ACTION_SEND);
-                            toUnity.putExtra("gameType", "tower");
+                            toUnity.putExtra("gameType", gameType);
                             toUnity.putExtra("gameAnswer", gameAnswer);
+                            toUnity.putExtra("photoUrl", photoUrl);
                             Log.d("gameTest", "URL: " + photoUrl);
                             getActivity().startActivity(toUnity);
                         }
