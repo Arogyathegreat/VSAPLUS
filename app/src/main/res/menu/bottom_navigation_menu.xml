@@ -11,7 +11,7 @@
 
     <item android:id="@+id/games"
         android:enabled="true"
-        android:icon="@drawable/ic_games"
+        android:icon="@drawable/ic_game_bottom"
         android:title="Games"
         app:showAsAction="ifRoom"
         />
